@@ -2,7 +2,7 @@
 using CommentMicroService.Data;
 using CommentMicroService.Dto;
 using CommentMicroService.Entities;
-using Shared.Errors;
+using Shared.Exceptions;
 
 namespace CommentMicroService.Services.PostCommands
 {
@@ -12,13 +12,13 @@ namespace CommentMicroService.Services.PostCommands
         {
             var post = mapper.Map<Post>(postDto);
 
-            if (post is null) throw new MapperError();
+            if (post is null) throw new MapperException();
 
             appDbContext.Posts.Add(post);
 
             var result = await appDbContext.SaveChangesAsync() > 0;
 
-            if (!result) throw new DatabaseError();
+            if (!result) throw new DatabaseException();
 
             return true;
         }

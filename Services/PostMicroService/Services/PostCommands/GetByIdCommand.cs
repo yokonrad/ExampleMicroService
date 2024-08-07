@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PostMicroService.Data;
 using PostMicroService.Dto;
-using Shared.Errors;
+using Shared.Exceptions;
 
 namespace PostMicroService.Services.PostCommands
 {
@@ -12,7 +12,7 @@ namespace PostMicroService.Services.PostCommands
         {
             var post = await appDbContext.Posts.FirstOrDefaultAsync(x => x.Id == id);
 
-            if (post is null) throw new NotFoundError();
+            if (post is null) throw new NotFoundException();
 
             return mapper.Map<PostDto>(post);
         }

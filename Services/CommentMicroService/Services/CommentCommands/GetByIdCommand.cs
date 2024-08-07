@@ -2,7 +2,7 @@
 using CommentMicroService.Data;
 using CommentMicroService.Dto;
 using Microsoft.EntityFrameworkCore;
-using Shared.Errors;
+using Shared.Exceptions;
 
 namespace CommentMicroService.Services.CommentCommands
 {
@@ -12,7 +12,7 @@ namespace CommentMicroService.Services.CommentCommands
         {
             var comment = await appDbContext.Comments.Include(x => x.Post).FirstOrDefaultAsync(x => x.Id == id);
 
-            if (comment is null) throw new NotFoundError();
+            if (comment is null) throw new NotFoundException();
 
             return mapper.Map<CommentDto>(comment);
         }

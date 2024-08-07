@@ -3,6 +3,7 @@ using CommentMicroService.Dto;
 using CommentMicroService.Services;
 using MassTransit;
 using Shared.Events;
+using Shared.Exceptions;
 
 namespace CommentMicroService.Consumers
 {
@@ -16,7 +17,7 @@ namespace CommentMicroService.Consumers
 
                 var postDto = mapper.Map<PostDto>(postDeleted.Message);
 
-                if (postDto is null) throw new Exception("Internal mapping error");
+                if (postDto is null) throw new MapperException();
 
                 await postService.Delete(postDto.Id);
             }

@@ -1,5 +1,5 @@
 ﻿using CommentMicroService.Data;
-using Shared.Errors;
+using Shared.Exceptions;
 
 namespace CommentMicroService.Services.PostCommands
 {
@@ -9,13 +9,13 @@ namespace CommentMicroService.Services.PostCommands
         {
             var post = await appDbContext.Posts.FindAsync(id);
 
-            if (post is null) throw new NotFoundError();
+            if (post is null) throw new NotFoundException();
 
             appDbContext.Posts.Remove(post);
 
             var result = await appDbContext.SaveChangesAsync() > 0;
 
-            if (!result) throw new DatabaseError();
+            if (!result) throw new DatabaseException();
 
             return true;
         }
