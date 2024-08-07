@@ -7,7 +7,7 @@ namespace PostMicroService.Consumers
     {
         public async Task Consume(ConsumeContext<PostNotCreated> postNotCreated)
         {
-            Console.WriteLine($"Consuming PostNotCreated with id: {postNotCreated.Message.Id} and message: {postNotCreated.Message.Message}");
+            await Task.Run(() => Console.WriteLine($"Consuming PostNotCreated with id: {postNotCreated.Message.Id} and message: {postNotCreated.Message.Message}"));
         }
     }
 }
