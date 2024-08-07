@@ -8,22 +8,22 @@ namespace PostMicroService.Data
     {
         public DbSet<Post> Posts { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
 
-            builder.AddInboxStateEntity();
-            builder.AddOutboxMessageEntity();
-            builder.AddOutboxStateEntity();
+            modelBuilder.AddInboxStateEntity();
+            modelBuilder.AddOutboxMessageEntity();
+            modelBuilder.AddOutboxStateEntity();
 
-            builder.Entity<Post>().HasKey(t => t.Id);
-            builder.Entity<Post>().Property(t => t.Id).IsRequired();
-            builder.Entity<Post>().Property(t => t.Title).IsRequired();
-            builder.Entity<Post>().Property(t => t.Visible).IsRequired();
-            builder.Entity<Post>().Property(t => t.CreatedAt).IsRequired();
-            builder.Entity<Post>().Property(t => t.UpdatedAt).IsRequired();
+            modelBuilder.Entity<Post>().HasKey(t => t.Id);
+            modelBuilder.Entity<Post>().Property(t => t.Id).IsRequired();
+            modelBuilder.Entity<Post>().Property(t => t.Title).IsRequired();
+            modelBuilder.Entity<Post>().Property(t => t.Visible).IsRequired();
+            modelBuilder.Entity<Post>().Property(t => t.CreatedAt).IsRequired();
+            modelBuilder.Entity<Post>().Property(t => t.UpdatedAt).IsRequired();
 
-            builder.Entity<Post>().HasData(new Post
+            modelBuilder.Entity<Post>().HasData(new Post
             {
                 Id = 1,
                 Title = "Post #1",
@@ -32,7 +32,7 @@ namespace PostMicroService.Data
                 UpdatedAt = DateTime.UtcNow,
             });
 
-            builder.Entity<Post>().HasData(new Post
+            modelBuilder.Entity<Post>().HasData(new Post
             {
                 Id = 2,
                 Title = "Post #2",
@@ -41,7 +41,7 @@ namespace PostMicroService.Data
                 UpdatedAt = DateTime.UtcNow,
             });
 
-            builder.Entity<Post>().HasData(new Post
+            modelBuilder.Entity<Post>().HasData(new Post
             {
                 Id = 3,
                 Title = "Post #3",

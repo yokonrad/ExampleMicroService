@@ -8,40 +8,40 @@ namespace CommentMicroService.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
 
-            builder.Entity<Post>().HasIndex(p => p.Id).IsUnique();
-            builder.Entity<Post>().Property(p => p.Id).IsRequired();
-            builder.Entity<Post>().Property(p => p.Id).ValueGeneratedNever();
+            modelBuilder.Entity<Post>().HasIndex(p => p.Id).IsUnique();
+            modelBuilder.Entity<Post>().Property(p => p.Id).IsRequired();
+            modelBuilder.Entity<Post>().Property(p => p.Id).ValueGeneratedNever();
 
-            builder.Entity<Comment>().HasKey(c => c.Id);
-            builder.Entity<Comment>().Property(c => c.Id).IsRequired();
-            builder.Entity<Comment>().Property(c => c.PostId).IsRequired();
-            builder.Entity<Comment>().Property(c => c.Text).IsRequired();
-            builder.Entity<Comment>().Property(c => c.CreatedAt).IsRequired();
-            builder.Entity<Comment>().Property(c => c.UpdatedAt).IsRequired();
+            modelBuilder.Entity<Comment>().HasKey(c => c.Id);
+            modelBuilder.Entity<Comment>().Property(c => c.Id).IsRequired();
+            modelBuilder.Entity<Comment>().Property(c => c.PostId).IsRequired();
+            modelBuilder.Entity<Comment>().Property(c => c.Text).IsRequired();
+            modelBuilder.Entity<Comment>().Property(c => c.CreatedAt).IsRequired();
+            modelBuilder.Entity<Comment>().Property(c => c.UpdatedAt).IsRequired();
 
-            builder.Entity<Comment>().Ignore(c => c.Post);
-            builder.Entity<Comment>().HasOne(c => c.Post).WithMany(p => p.Comments).HasForeignKey(c => c.PostId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Comment>().Ignore(c => c.Post);
+            modelBuilder.Entity<Comment>().HasOne(c => c.Post).WithMany(p => p.Comments).HasForeignKey(c => c.PostId).OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Post>().HasData(new Post
+            modelBuilder.Entity<Post>().HasData(new Post
             {
                 Id = 1,
             });
 
-            builder.Entity<Post>().HasData(new Post
+            modelBuilder.Entity<Post>().HasData(new Post
             {
                 Id = 2,
             });
 
-            builder.Entity<Post>().HasData(new Post
+            modelBuilder.Entity<Post>().HasData(new Post
             {
                 Id = 3,
             });
 
-            builder.Entity<Comment>().HasData(new Comment
+            modelBuilder.Entity<Comment>().HasData(new Comment
             {
                 Id = 1,
                 PostId = 1,
@@ -50,7 +50,7 @@ namespace CommentMicroService.Data
                 UpdatedAt = DateTime.UtcNow,
             });
 
-            builder.Entity<Comment>().HasData(new Comment
+            modelBuilder.Entity<Comment>().HasData(new Comment
             {
                 Id = 2,
                 PostId = 1,
@@ -59,7 +59,7 @@ namespace CommentMicroService.Data
                 UpdatedAt = DateTime.UtcNow,
             });
 
-            builder.Entity<Comment>().HasData(new Comment
+            modelBuilder.Entity<Comment>().HasData(new Comment
             {
                 Id = 3,
                 PostId = 2,
