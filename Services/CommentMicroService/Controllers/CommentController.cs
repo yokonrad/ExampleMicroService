@@ -1,41 +1,26 @@
-﻿using CommentMicroService.Controllers.Commands;
-using CommentMicroService.Dto;
+﻿using CommentMicroService.Dto;
 using CommentMicroService.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CommentMicroService.Controllers
 {
+    [ApiController]
     [Route("api/v1/[controller]")]
-    public class CommentController : Controller
+    public class CommentController(CommentService commentService) : ControllerBase
     {
-        private readonly GetByIdCommand _getByIdCommand;
-        private readonly GetByPostIdCommand _getByPostIdCommand;
-        private readonly CreateCommand _createCommand;
-        private readonly UpdateCommand _updateCommand;
-        private readonly DeleteCommand _deleteCommand;
+        [HttpGet("{Id:int}")]
+        public async Task<ActionResult<CommentDto>> GetById(int Id) => Ok(await commentService.GetById(Id));
 
-        public CommentController(CommentService commentService)
-        {
-            _getByIdCommand = new(this, commentService);
-            _getByPostIdCommand = new(this, commentService);
-            _createCommand = new(this, commentService);
-            _updateCommand = new(this, commentService);
-            _deleteCommand = new(this, commentService);
-        }
-
-        [HttpGet("{Id}")]
-        public async Task<ActionResult> GetById(int Id) => await _getByIdCommand.Execute(Id);
-
-        [HttpGet("{PostId}/post")]
-        public async Task<ActionResult> GetByPostId(int PostId) => await _getByPostIdCommand.Execute(PostId);
+        [HttpGet("{PostId:int}/post")]
+        public async Task<ActionResult<IEnumerable<CommentDto>>> GetByPostId(int PostId) => Ok(await commentService.GetByPostId(PostId));
 
         [HttpPost]
-        public async Task<ActionResult> Create(CreateCommentDto createCommentDto) => await _createCommand.Execute(createCommentDto);
+        public async Task<ActionResult<CommentDto>> Create(CreateCommentDto createCommentDto) => Ok(await commentService.Create(createCommentDto));
 
-        [HttpPut("{Id}")]
-        public async Task<ActionResult> Update(int Id, UpdateCommentDto updateCommentDto) => await _updateCommand.Execute(Id, updateCommentDto);
+        [HttpPut("{Id:int}")]
+        public async Task<ActionResult<CommentDto>> Update(int Id, UpdateCommentDto updateCommentDto) => Ok(await commentService.Update(Id, updateCommentDto));
 
-        [HttpDelete("{Id}")]
-        public async Task<ActionResult> Delete(int Id) => await _deleteCommand.Execute(Id);
+        [HttpDelete("{Id:int}")]
+        public async Task<ActionResult<bool>> Delete(int Id) => Ok(await commentService.Delete(Id));
     }
 }
