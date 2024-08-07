@@ -14,7 +14,7 @@ namespace CommentMicroService.Services
         private readonly DeleteCommand _deleteCommand = new(appDbContext);
 
         public async Task<CommentDto> GetById(int id) => await _getByIdCommand.Execute(id);
-        public async Task<List<CommentDto>> GetByPostId(int postId) => await _getByPostIdCommand.Execute(postId);
+        public async Task<IEnumerable<CommentDto>> GetByPostId(int postId) => await _getByPostIdCommand.Execute(postId);
         public async Task<CommentDto> Create(CreateCommentDto createCommentDto) => await _createCommand.Execute(createCommentDto);
         public async Task<CommentDto> Update(int id, UpdateCommentDto updateCommentDto) => await _updateCommand.Execute(id, updateCommentDto);
         public async Task<bool> Delete(int id) => await _deleteCommand.Execute(id);
