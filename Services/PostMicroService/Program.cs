@@ -3,17 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using PostMicroService.Consumers;
 using PostMicroService.Data;
 using PostMicroService.Services;
+using Shared.Filters;
 
 namespace PostMicroService
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(x => x.Filters.Add(typeof(ExceptionFilter)));
             builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddHttpClient<CommentService>();
