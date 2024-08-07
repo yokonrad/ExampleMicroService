@@ -9,18 +9,18 @@ namespace CommentMicroService.Controllers
     public class CommentController(CommentService commentService) : ControllerBase
     {
         [HttpGet("{Id:int}")]
-        public async Task<ActionResult<CommentDto>> GetById(int Id) => Ok(await commentService.GetById(Id));
+        public async Task<ActionResult<CommentDto>> GetById([FromRoute] int Id) => Ok(await commentService.GetById(Id));
 
         [HttpGet("{PostId:int}/post")]
-        public async Task<ActionResult<IEnumerable<CommentDto>>> GetByPostId(int PostId) => Ok(await commentService.GetByPostId(PostId));
+        public async Task<ActionResult<IEnumerable<CommentDto>>> GetByPostId([FromRoute] int PostId) => Ok(await commentService.GetByPostId(PostId));
 
         [HttpPost]
-        public async Task<ActionResult<CommentDto>> Create(CreateCommentDto createCommentDto) => Ok(await commentService.Create(createCommentDto));
+        public async Task<ActionResult<CommentDto>> Create([FromQuery] CreateCommentDto createCommentDto) => Ok(await commentService.Create(createCommentDto));
 
         [HttpPut("{Id:int}")]
-        public async Task<ActionResult<CommentDto>> Update(int Id, UpdateCommentDto updateCommentDto) => Ok(await commentService.Update(Id, updateCommentDto));
+        public async Task<ActionResult<CommentDto>> Update([FromRoute] int Id, [FromQuery] UpdateCommentDto updateCommentDto) => Ok(await commentService.Update(Id, updateCommentDto));
 
         [HttpDelete("{Id:int}")]
-        public async Task<ActionResult<bool>> Delete(int Id) => Ok(await commentService.Delete(Id));
+        public async Task<ActionResult<bool>> Delete([FromRoute] int Id) => Ok(await commentService.Delete(Id));
     }
 }

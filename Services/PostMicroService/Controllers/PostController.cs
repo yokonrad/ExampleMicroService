@@ -6,7 +6,7 @@ namespace PostMicroService.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class PostController(PostService postService) : ControllerBase
+    public class PostController(PostService postService, CommentService commentService) : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PostDto>>> GetAll() => Ok(await postService.GetAll());
@@ -24,6 +24,6 @@ namespace PostMicroService.Controllers
         public async Task<ActionResult<bool>> Delete([FromRoute] int Id) => Ok(await postService.Delete(Id));
 
         [HttpGet("{Id:int}/comment")]
-        public async Task<ActionResult<PostCommentDto>> GetByIdComment(int Id) => Ok(await postService.GetByIdComment(Id));
+        public async Task<ActionResult<PostCommentDto>> GetByIdComment([FromRoute] int Id) => Ok(await commentService.GetByIdComment(Id));
     }
 }
