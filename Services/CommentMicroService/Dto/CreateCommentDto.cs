@@ -6,6 +6,7 @@ namespace CommentMicroService.Dto
     {
         [Required]
         public int PostId { get; set; }
+
         [Required]
         public string Text { get; set; } = null!;
     }

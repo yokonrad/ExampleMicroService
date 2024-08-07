@@ -11,6 +11,7 @@ namespace CommentMicroService.Services
         private readonly DeleteCommand _deleteCommand = new(appDbContext);
 
         public async Task<bool> Create(PostDto postDto) => await _createCommand.Execute(postDto);
+
         public async Task<bool> Delete(int id) => await _deleteCommand.Execute(id);
     }
 }

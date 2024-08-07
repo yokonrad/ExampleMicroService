@@ -6,6 +6,7 @@ namespace PostMicroService.Dto
     {
         [Required]
         public string Title { get; set; } = null!;
+
         [Required]
         public bool Visible { get; set; }
     }
