@@ -20,7 +20,7 @@ namespace CommentMicroService
                 o.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
                 o.SerializerSettings.MaxDepth = 1;
             });
-            builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddMassTransit(x =>
             {
