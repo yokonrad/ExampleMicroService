@@ -12,7 +12,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostMicroService", "Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommentMicroService", "Services\CommentMicroService\CommentMicroService.csproj", "{23E64513-4FE8-4906-A87F-0B5DC0787874}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Services\Shared\Shared.csproj", "{61B9DACA-ACE3-4793-99C8-C2C3CB57D7A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Services\Shared\Shared.csproj", "{61B9DACA-ACE3-4793-99C8-C2C3CB57D7A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "Services\ApiGateway\ApiGateway.csproj", "{E44BA406-CCEB-4DF8-B9B6-EFE8567EEA6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{61B9DACA-ACE3-4793-99C8-C2C3CB57D7A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61B9DACA-ACE3-4793-99C8-C2C3CB57D7A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61B9DACA-ACE3-4793-99C8-C2C3CB57D7A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E44BA406-CCEB-4DF8-B9B6-EFE8567EEA6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E44BA406-CCEB-4DF8-B9B6-EFE8567EEA6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E44BA406-CCEB-4DF8-B9B6-EFE8567EEA6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E44BA406-CCEB-4DF8-B9B6-EFE8567EEA6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

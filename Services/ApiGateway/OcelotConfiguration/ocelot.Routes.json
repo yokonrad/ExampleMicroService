@@ -1,0 +1,17 @@
+{
+  "Routes": [
+    {
+      "ServiceName": "post",
+      "SwaggerKey": "post",
+      "DownstreamPathTemplate": "/api/v1/post/{everything}",
+      "UpstreamPathTemplate": "/post/{everything}"
+
+    },
+    {
+      "ServiceName": "comment",
+      "SwaggerKey": "comment",
+      "DownstreamPathTemplate": "/api/v1/comment/{everything}",
+      "UpstreamPathTemplate": "/comment/{everything}"
+    }
+  ]
+}

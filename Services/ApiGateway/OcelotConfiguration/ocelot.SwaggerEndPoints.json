@@ -1,0 +1,30 @@
+{
+  "SwaggerEndPoints": [
+    {
+      "Key": "post",
+      "Config": [
+        {
+          "Name": "Post Service API",
+          "Version": "v1",
+          "Service": {
+            "Name": "post",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    },
+    {
+      "Key": "comment",
+      "Config": [
+        {
+          "Name": "Comment Service API",
+          "Version": "v1",
+          "Service": {
+            "Name": "comment",
+            "Path": "/swagger/v1/swagger.json"
+          }
+        }
+      ]
+    }
+  ]
+}
