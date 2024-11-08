@@ -3,11 +3,11 @@ using Shared.Events;
 
 namespace PostMicroService.Consumers
 {
-    public class PostNotCreatedConsumer() : IConsumer<PostNotCreated>
+    public class PostNotCreatedConsumer(ILogger<PostNotCreatedConsumer> logger) : IConsumer<PostNotCreated>
     {
         public async Task Consume(ConsumeContext<PostNotCreated> postNotCreated)
         {
-            await Task.Run(() => Console.WriteLine($"Consuming PostNotCreated with id: {postNotCreated.Message.Id} and message: {postNotCreated.Message.Message}"));
+            await Task.Run(() => logger.LogInformation("Consuming PostNotCreated with id: {Id} and message: {Message}", postNotCreated.Message.Id, postNotCreated.Message.Message));
         }
     }
 }

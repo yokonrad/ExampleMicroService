@@ -7,13 +7,13 @@ using Shared.Exceptions;
 
 namespace CommentMicroService.Consumers
 {
-    public class PostDeletedConsumer(PostService postService, IMapper mapper, IPublishEndpoint publishEndpoint) : IConsumer<PostDeleted>
+    public class PostDeletedConsumer(PostService postService, ILogger<PostDeletedConsumer> logger, IMapper mapper, IPublishEndpoint publishEndpoint) : IConsumer<PostDeleted>
     {
         public async Task Consume(ConsumeContext<PostDeleted> postDeleted)
         {
             try
             {
-                Console.WriteLine($"Consuming PostDeleted with id: {postDeleted.Message.Id}");
+                logger.LogInformation("Consuming PostDeleted with id: {Id}", postDeleted.Message.Id);
 
                 var postDto = mapper.Map<PostDto>(postDeleted.Message);
 
