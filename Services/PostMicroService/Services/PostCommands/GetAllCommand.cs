@@ -14,7 +14,11 @@ namespace PostMicroService.Services.PostCommands
 
             if (posts.Count == 0) throw new NotFoundException();
 
-            return mapper.Map<IEnumerable<PostDto>>(posts);
+            var postsDto = mapper.Map<IEnumerable<PostDto>>(posts);
+
+            if (postsDto is null) throw new MapperException();
+
+            return postsDto;
         }
     }
 }

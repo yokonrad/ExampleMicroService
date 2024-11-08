@@ -29,7 +29,11 @@ namespace PostMicroService.Services.PostCommands
 
             if (postDto is null) throw new MapperException();
 
-            await publishEndpoint.Publish(mapper.Map<PostCreated>(postDto));
+            var postCreated = mapper.Map<PostCreated>(postDto);
+
+            if (postCreated is null) throw new MapperException();
+
+            await publishEndpoint.Publish(postCreated);
 
             transaction.Complete();
 

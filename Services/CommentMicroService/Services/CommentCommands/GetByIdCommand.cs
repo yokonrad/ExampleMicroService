@@ -14,7 +14,11 @@ namespace CommentMicroService.Services.CommentCommands
 
             if (comment is null) throw new NotFoundException();
 
-            return mapper.Map<CommentDto>(comment);
+            var commentDto = mapper.Map<CommentDto>(comment);
+
+            if (commentDto is null) throw new MapperException();
+
+            return commentDto;
         }
     }
 }

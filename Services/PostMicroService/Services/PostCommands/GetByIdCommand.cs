@@ -14,7 +14,11 @@ namespace PostMicroService.Services.PostCommands
 
             if (post is null) throw new NotFoundException();
 
-            return mapper.Map<PostDto>(post);
+            var postDto = mapper.Map<PostDto>(post);
+
+            if (postDto is null) throw new MapperException();
+
+            return postDto;
         }
     }
 }

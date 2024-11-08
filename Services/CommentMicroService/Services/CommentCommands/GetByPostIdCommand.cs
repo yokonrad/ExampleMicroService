@@ -14,7 +14,11 @@ namespace CommentMicroService.Services.CommentCommands
 
             if (comments.Count == 0) throw new NotFoundException();
 
-            return mapper.Map<IEnumerable<CommentDto>>(comments);
+            var commentsDto = mapper.Map<IEnumerable<CommentDto>>(comments);
+
+            if (commentsDto is null) throw new MapperException();
+
+            return commentsDto;
         }
     }
 }

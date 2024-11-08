@@ -28,7 +28,11 @@ namespace PostMicroService.Services.PostCommands
 
             if (postDto is null) throw new MapperException();
 
-            await publishEndpoint.Publish(mapper.Map<PostDeleted>(postDto));
+            var postDeleted = mapper.Map<PostDeleted>(postDto);
+
+            if (postDeleted is null) throw new MapperException();
+
+            await publishEndpoint.Publish(postDeleted);
 
             transaction.Complete();
 
