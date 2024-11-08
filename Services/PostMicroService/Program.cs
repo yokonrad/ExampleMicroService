@@ -17,7 +17,7 @@ namespace PostMicroService
             builder.Services.AddControllers(x => x.Filters.Add(typeof(ExceptionFilter)));
             builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddHttpClient<CommentService>();
+            builder.Services.AddHttpClient<PostService>();
             builder.Services.AddMassTransit(x =>
             {
                 x.AddConsumer<PostNotCreatedConsumer>();
@@ -45,7 +45,6 @@ namespace PostMicroService
                 });
             });
             builder.Services.AddRouting(o => o.LowercaseUrls = true);
-            builder.Services.AddScoped<PostService>();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();

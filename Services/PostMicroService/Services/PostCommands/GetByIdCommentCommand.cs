@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json;
 using PostMicroService.Dto;
 
-namespace PostMicroService.Services.CommentCommands
+namespace PostMicroService.Services.PostCommands
 {
     internal class GetByIdCommentCommand(PostService postService, HttpClient httpClient, IConfiguration configuration)
     {
-        internal async Task<PostCommentDto?> Execute(int id)
+        internal async Task<PostCommentDto> Execute(int id)
         {
             var postDto = await postService.GetById(id);
 
