@@ -3,6 +3,7 @@ using CommentMicroService.Data;
 using CommentMicroService.Services;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Shared.Filters;
 
 namespace CommentMicroService
@@ -43,7 +44,7 @@ namespace CommentMicroService
             builder.Services.AddRouting(o => o.LowercaseUrls = true);
             builder.Services.AddScoped<PostService>();
             builder.Services.AddScoped<CommentService>();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "Comment Service API", Version = "v1" }));
 
             var app = builder.Build();
 
