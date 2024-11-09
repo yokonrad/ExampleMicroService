@@ -17,7 +17,7 @@ namespace CommentMicroService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -53,26 +53,26 @@ namespace CommentMicroService.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 5, 31, 9, 8, 7, 601, DateTimeKind.Utc).AddTicks(7630),
+                            CreatedAt = new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7154),
                             PostId = 1,
                             Text = "Post #1 Comment #1",
-                            UpdatedAt = new DateTime(2024, 5, 31, 9, 8, 7, 601, DateTimeKind.Utc).AddTicks(7631)
+                            UpdatedAt = new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7154)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 5, 31, 9, 8, 7, 601, DateTimeKind.Utc).AddTicks(7644),
+                            CreatedAt = new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7169),
                             PostId = 1,
                             Text = "Post #1 Comment #2",
-                            UpdatedAt = new DateTime(2024, 5, 31, 9, 8, 7, 601, DateTimeKind.Utc).AddTicks(7644)
+                            UpdatedAt = new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7169)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 5, 31, 9, 8, 7, 601, DateTimeKind.Utc).AddTicks(7654),
+                            CreatedAt = new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7180),
                             PostId = 2,
                             Text = "Post #2 Comment #1",
-                            UpdatedAt = new DateTime(2024, 5, 31, 9, 8, 7, 601, DateTimeKind.Utc).AddTicks(7654)
+                            UpdatedAt = new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7180)
                         });
                 });
 

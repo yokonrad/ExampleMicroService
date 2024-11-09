@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,7 +8,7 @@
 namespace PostMicroService.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,38 +34,6 @@ namespace PostMicroService.Migrations
                 {
                     table.PrimaryKey("PK_InboxState", x => x.Id);
                     table.UniqueConstraint("AK_InboxState_MessageId_ConsumerId", x => new { x.MessageId, x.ConsumerId });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OutboxMessage",
-                columns: table => new
-                {
-                    SequenceNumber = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EnqueueTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    SentTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Headers = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Properties = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InboxMessageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    InboxConsumerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OutboxId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    MessageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ContentType = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    MessageType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ConversationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CorrelationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    InitiatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    RequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SourceAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    DestinationAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    ResponseAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    FaultAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    ExpirationTime = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OutboxMessage", x => x.SequenceNumber);
                 });
 
             migrationBuilder.CreateTable(
@@ -99,14 +68,56 @@ namespace PostMicroService.Migrations
                     table.PrimaryKey("PK_Posts", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "OutboxMessage",
+                columns: table => new
+                {
+                    SequenceNumber = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EnqueueTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SentTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Headers = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Properties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InboxMessageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    InboxConsumerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    OutboxId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    MessageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ContentType = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    MessageType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ConversationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CorrelationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    InitiatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    SourceAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    DestinationAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ResponseAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    FaultAddress = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ExpirationTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OutboxMessage", x => x.SequenceNumber);
+                    table.ForeignKey(
+                        name: "FK_OutboxMessage_InboxState_InboxMessageId_InboxConsumerId",
+                        columns: x => new { x.InboxMessageId, x.InboxConsumerId },
+                        principalTable: "InboxState",
+                        principalColumns: new[] { "MessageId", "ConsumerId" });
+                    table.ForeignKey(
+                        name: "FK_OutboxMessage_OutboxState_OutboxId",
+                        column: x => x.OutboxId,
+                        principalTable: "OutboxState",
+                        principalColumn: "OutboxId");
+                });
+
             migrationBuilder.InsertData(
                 table: "Posts",
                 columns: new[] { "Id", "CreatedAt", "Title", "UpdatedAt", "Visible" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 5, 31, 9, 7, 47, 845, DateTimeKind.Utc).AddTicks(9539), "Post #1", new DateTime(2024, 5, 31, 9, 7, 47, 845, DateTimeKind.Utc).AddTicks(9540), true },
-                    { 2, new DateTime(2024, 5, 31, 9, 7, 47, 845, DateTimeKind.Utc).AddTicks(9562), "Post #2", new DateTime(2024, 5, 31, 9, 7, 47, 845, DateTimeKind.Utc).AddTicks(9562), false },
-                    { 3, new DateTime(2024, 5, 31, 9, 7, 47, 845, DateTimeKind.Utc).AddTicks(9572), "Post #3", new DateTime(2024, 5, 31, 9, 7, 47, 845, DateTimeKind.Utc).AddTicks(9573), true }
+                    { 1, new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(287), "Post #1", new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(288), true },
+                    { 2, new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(307), "Post #2", new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(308), false },
+                    { 3, new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(316), "Post #3", new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(316), true }
                 });
 
             migrationBuilder.CreateIndex(
@@ -148,16 +159,16 @@ namespace PostMicroService.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "InboxState");
-
-            migrationBuilder.DropTable(
                 name: "OutboxMessage");
 
             migrationBuilder.DropTable(
-                name: "OutboxState");
+                name: "Posts");
 
             migrationBuilder.DropTable(
-                name: "Posts");
+                name: "InboxState");
+
+            migrationBuilder.DropTable(
+                name: "OutboxState");
         }
     }
 }

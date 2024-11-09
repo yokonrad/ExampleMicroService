@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,7 +8,7 @@
 namespace CommentMicroService.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -60,9 +61,9 @@ namespace CommentMicroService.Migrations
                 columns: new[] { "Id", "CreatedAt", "PostId", "Text", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 5, 31, 9, 8, 7, 601, DateTimeKind.Utc).AddTicks(7630), 1, "Post #1 Comment #1", new DateTime(2024, 5, 31, 9, 8, 7, 601, DateTimeKind.Utc).AddTicks(7631) },
-                    { 2, new DateTime(2024, 5, 31, 9, 8, 7, 601, DateTimeKind.Utc).AddTicks(7644), 1, "Post #1 Comment #2", new DateTime(2024, 5, 31, 9, 8, 7, 601, DateTimeKind.Utc).AddTicks(7644) },
-                    { 3, new DateTime(2024, 5, 31, 9, 8, 7, 601, DateTimeKind.Utc).AddTicks(7654), 2, "Post #2 Comment #1", new DateTime(2024, 5, 31, 9, 8, 7, 601, DateTimeKind.Utc).AddTicks(7654) }
+                    { 1, new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7154), 1, "Post #1 Comment #1", new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7154) },
+                    { 2, new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7169), 1, "Post #1 Comment #2", new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7169) },
+                    { 3, new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7180), 2, "Post #2 Comment #1", new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7180) }
                 });
 
             migrationBuilder.CreateIndex(

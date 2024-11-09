@@ -17,7 +17,7 @@ namespace PostMicroService.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -63,8 +63,6 @@ namespace PostMicroService.Migrations
                         .HasColumnType("rowversion");
 
                     b.HasKey("Id");
-
-                    b.HasAlternateKey("MessageId", "ConsumerId");
 
                     b.HasIndex("Delivered");
 
@@ -223,27 +221,39 @@ namespace PostMicroService.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 5, 31, 9, 7, 47, 845, DateTimeKind.Utc).AddTicks(9539),
+                            CreatedAt = new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(287),
                             Title = "Post #1",
-                            UpdatedAt = new DateTime(2024, 5, 31, 9, 7, 47, 845, DateTimeKind.Utc).AddTicks(9540),
+                            UpdatedAt = new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(288),
                             Visible = true
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 5, 31, 9, 7, 47, 845, DateTimeKind.Utc).AddTicks(9562),
+                            CreatedAt = new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(307),
                             Title = "Post #2",
-                            UpdatedAt = new DateTime(2024, 5, 31, 9, 7, 47, 845, DateTimeKind.Utc).AddTicks(9562),
+                            UpdatedAt = new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(308),
                             Visible = false
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 5, 31, 9, 7, 47, 845, DateTimeKind.Utc).AddTicks(9572),
+                            CreatedAt = new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(316),
                             Title = "Post #3",
-                            UpdatedAt = new DateTime(2024, 5, 31, 9, 7, 47, 845, DateTimeKind.Utc).AddTicks(9573),
+                            UpdatedAt = new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(316),
                             Visible = true
                         });
+                });
+
+            modelBuilder.Entity("MassTransit.EntityFrameworkCoreIntegration.OutboxMessage", b =>
+                {
+                    b.HasOne("MassTransit.EntityFrameworkCoreIntegration.OutboxState", null)
+                        .WithMany()
+                        .HasForeignKey("OutboxId");
+
+                    b.HasOne("MassTransit.EntityFrameworkCoreIntegration.InboxState", null)
+                        .WithMany()
+                        .HasForeignKey("InboxMessageId", "InboxConsumerId")
+                        .HasPrincipalKey("MessageId", "ConsumerId");
                 });
 #pragma warning restore 612, 618
         }
