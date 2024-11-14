@@ -6,7 +6,7 @@ namespace PostMicroService.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class PostController(PostService postService) : ControllerBase
+    public class PostController(IPostService postService) : ControllerBase
     {
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PostDto>>> GetAll() => Ok(await postService.GetAll());
