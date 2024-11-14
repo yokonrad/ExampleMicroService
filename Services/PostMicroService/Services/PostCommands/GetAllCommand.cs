@@ -1,24 +1,13 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using PostMicroService.Data;
-using PostMicroService.Dto;
-using Shared.Exceptions;
+﻿using PostMicroService.Dto;
+using PostMicroService.Repositories;
 
 namespace PostMicroService.Services.PostCommands
 {
-    internal class GetAllCommand(AppDbContext appDbContext, IMapper mapper)
+    internal class GetAllCommand(IPostRepository postRepository)
     {
         internal async Task<IEnumerable<PostDto>> Execute()
         {
-            var posts = await appDbContext.Posts.OrderBy(x => x.Id).ToListAsync();
-
-            if (posts.Count == 0) throw new NotFoundException();
-
-            var postsDto = mapper.Map<IEnumerable<PostDto>>(posts);
-
-            if (postsDto is null) throw new MapperException();
-
-            return postsDto;
+            return await postRepository.GetAll();
         }
     }
 }

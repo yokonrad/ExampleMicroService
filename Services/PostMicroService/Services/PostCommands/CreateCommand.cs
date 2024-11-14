@@ -1,37 +1,20 @@
 ﻿using AutoMapper;
 using MassTransit;
-using PostMicroService.Data;
 using PostMicroService.Dto;
-using PostMicroService.Entities;
+using PostMicroService.Repositories;
 using Shared.Events;
-using Shared.Exceptions;
 using System.Transactions;
 
 namespace PostMicroService.Services.PostCommands
 {
-    internal class CreateCommand(AppDbContext appDbContext, IMapper mapper, IPublishEndpoint publishEndpoint)
+    internal class CreateCommand(IPostRepository postRepository, IMapper mapper, IPublishEndpoint publishEndpoint)
     {
         internal async Task<PostDto> Execute(CreatePostDto createPostDto)
         {
             using var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
 
-            var post = mapper.Map<Post>(createPostDto);
-
-            if (post is null) throw new MapperException();
-
-            appDbContext.Posts.Add(post);
-
-            var result = await appDbContext.SaveChangesAsync() > 0;
-
-            if (!result) throw new DatabaseException();
-
-            var postDto = mapper.Map<PostDto>(post);
-
-            if (postDto is null) throw new MapperException();
-
+            var postDto = await postRepository.Create(createPostDto);
             var postCreated = mapper.Map<PostCreated>(postDto);
-
-            if (postCreated is null) throw new MapperException();
 
             await publishEndpoint.Publish(postCreated);
 

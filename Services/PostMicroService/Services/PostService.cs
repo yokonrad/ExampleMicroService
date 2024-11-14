@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using MassTransit;
-using PostMicroService.Data;
 using PostMicroService.Dto;
+using PostMicroService.Repositories;
 using PostMicroService.Services.PostCommands;
 
 namespace PostMicroService.Services
 {
-    public class PostService
+    public class PostService : IPostService
     {
         private readonly GetAllCommand _getAllCommand;
         private readonly GetByIdCommand _getByIdCommand;
@@ -15,14 +15,14 @@ namespace PostMicroService.Services
         private readonly UpdateCommand _updateCommand;
         private readonly DeleteCommand _deleteCommand;
 
-        public PostService(AppDbContext appDbContext, IMapper mapper, HttpClient httpClient, IConfiguration configuration, IPublishEndpoint publishEndpoint)
+        public PostService(IPostRepository postRepository, IMapper mapper, IPublishEndpoint publishEndpoint)
         {
-            _getAllCommand = new(appDbContext, mapper);
-            _getByIdCommand = new(appDbContext, mapper);
-            _getByIdCommentCommand = new(this, httpClient, configuration);
-            _createCommand = new(appDbContext, mapper, publishEndpoint);
-            _updateCommand = new(appDbContext, mapper);
-            _deleteCommand = new(appDbContext, mapper, publishEndpoint);
+            _getAllCommand = new(postRepository);
+            _getByIdCommand = new(postRepository);
+            _getByIdCommentCommand = new(postRepository);
+            _createCommand = new(postRepository, mapper, publishEndpoint);
+            _updateCommand = new(postRepository);
+            _deleteCommand = new(postRepository, mapper, publishEndpoint);
         }
 
         public async Task<IEnumerable<PostDto>> GetAll() => await _getAllCommand.Execute();
