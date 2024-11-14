@@ -4,10 +4,8 @@ using PostMicroService.Entities;
 
 namespace PostMicroService.Data
 {
-    public class AppDbContext(DbContextOptions options, IWebHostEnvironment webHostEnvironment) : DbContext(options)
+    public class AppDbContext(DbContextOptions options) : DbContext(options)
     {
-        private readonly IWebHostEnvironment _webHostEnvironment = webHostEnvironment;
-
         public DbSet<Post> Posts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,35 +23,32 @@ namespace PostMicroService.Data
             modelBuilder.Entity<Post>().Property(t => t.CreatedAt).IsRequired();
             modelBuilder.Entity<Post>().Property(t => t.UpdatedAt).IsRequired();
 
-            if (_webHostEnvironment.IsDevelopment())
+            modelBuilder.Entity<Post>().HasData(new Post
             {
-                modelBuilder.Entity<Post>().HasData(new Post
-                {
-                    Id = 1,
-                    Title = "Post #1",
-                    Visible = true,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
-                });
+                Id = 1,
+                Title = "Post #1",
+                Visible = true,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+            });
 
-                modelBuilder.Entity<Post>().HasData(new Post
-                {
-                    Id = 2,
-                    Title = "Post #2",
-                    Visible = false,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
-                });
+            modelBuilder.Entity<Post>().HasData(new Post
+            {
+                Id = 2,
+                Title = "Post #2",
+                Visible = false,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+            });
 
-                modelBuilder.Entity<Post>().HasData(new Post
-                {
-                    Id = 3,
-                    Title = "Post #3",
-                    Visible = true,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
-                });
-            }
+            modelBuilder.Entity<Post>().HasData(new Post
+            {
+                Id = 3,
+                Title = "Post #3",
+                Visible = true,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+            });
         }
     }
 }
