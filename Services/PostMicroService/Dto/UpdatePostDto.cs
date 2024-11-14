@@ -1,8 +1,8 @@
 ﻿namespace PostMicroService.Dto
 {
-    public class UpdatePostDto
+    public record class UpdatePostDto
     {
-        public string? Title { get; set; }
-        public bool? Visible { get; set; }
+        public string? Title { get; init; }
+        public bool? Visible { get; init; }
     }
 }

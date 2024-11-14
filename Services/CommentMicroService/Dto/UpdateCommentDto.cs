@@ -1,8 +1,8 @@
 ﻿namespace CommentMicroService.Dto
 {
-    public class UpdateCommentDto
+    public record class UpdateCommentDto
     {
-        public int? PostId { get; set; }
-        public string? Text { get; set; }
+        public int? PostId { get; init; }
+        public string? Text { get; init; }
     }
 }

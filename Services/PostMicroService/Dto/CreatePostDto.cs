@@ -1,13 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace PostMicroService.Dto
+﻿namespace PostMicroService.Dto
 {
-    public class CreatePostDto
+    public record class CreatePostDto
     {
-        [Required]
-        public string Title { get; set; } = null!;
-
-        [Required]
-        public bool Visible { get; set; }
+        public required string Title { get; init; }
+        public required bool Visible { get; init; }
     }
 }

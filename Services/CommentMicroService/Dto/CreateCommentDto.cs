@@ -1,13 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CommentMicroService.Dto
+﻿namespace CommentMicroService.Dto
 {
-    public class CreateCommentDto
+    public record class CreateCommentDto
     {
-        [Required]
-        public int PostId { get; set; }
-
-        [Required]
-        public string Text { get; set; } = null!;
+        public required int PostId { get; init; }
+        public required string Text { get; init; }
     }
 }

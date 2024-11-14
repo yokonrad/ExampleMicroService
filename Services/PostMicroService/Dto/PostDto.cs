@@ -1,11 +1,11 @@
 ﻿namespace PostMicroService.Dto
 {
-    public class PostDto
+    public record class PostDto
     {
-        public int Id { get; set; }
-        public string Title { get; set; } = null!;
-        public bool Visible { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public int Id { get; init; }
+        public string Title { get; init; }
+        public bool Visible { get; init; }
+        public DateTime CreatedAt { get; init; }
+        public DateTime UpdatedAt { get; init; }
     }
 }

@@ -1,12 +1,12 @@
 ﻿namespace PostMicroService.Dto
 {
-    public class PostCommentDto
+    public record class PostCommentDto
     {
-        public int Id { get; set; }
-        public string Title { get; set; } = null!;
-        public bool Visible { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
-        public ICollection<CommentDto> Comments { get; set; } = null!;
+        public int Id { get; init; }
+        public string Title { get; init; }
+        public bool Visible { get; init; }
+        public DateTime CreatedAt { get; init; }
+        public DateTime UpdatedAt { get; init; }
+        public ICollection<CommentDto> Comments { get; init; }
     }
 }
