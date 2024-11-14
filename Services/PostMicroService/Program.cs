@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PostMicroService.Consumers;
 using PostMicroService.Data;
+using PostMicroService.Repositories;
 using PostMicroService.Services;
 using Shared.Filters;
 
@@ -23,7 +24,7 @@ namespace PostMicroService
             });
             builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddHttpClient<PostService>();
+            builder.Services.AddHttpClient<IPostRepository, PostRepository>();
             builder.Services.AddMassTransit(x =>
             {
                 x.AddConsumer<PostNotCreatedConsumer>();
@@ -51,6 +52,7 @@ namespace PostMicroService
                 });
             });
             builder.Services.AddRouting(o => o.LowercaseUrls = true);
+            builder.Services.AddScoped<IPostService, PostService>();
             builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "Post Service API", Version = "v1" }));
 
             var app = builder.Build();
