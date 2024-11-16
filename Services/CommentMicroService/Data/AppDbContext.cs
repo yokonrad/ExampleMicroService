@@ -16,15 +16,15 @@ namespace CommentMicroService.Data
             modelBuilder.Entity<Post>().Property(p => p.Id).IsRequired();
             modelBuilder.Entity<Post>().Property(p => p.Id).ValueGeneratedNever();
 
+            modelBuilder.Entity<Post>().Ignore(p => p.Comments);
+            modelBuilder.Entity<Post>().HasMany(p => p.Comments).WithOne(c =>  c.Post).HasForeignKey(c => c.PostId).OnDelete(DeleteBehavior.Cascade).IsRequired();
+
             modelBuilder.Entity<Comment>().HasKey(c => c.Id);
             modelBuilder.Entity<Comment>().Property(c => c.Id).IsRequired();
             modelBuilder.Entity<Comment>().Property(c => c.PostId).IsRequired();
             modelBuilder.Entity<Comment>().Property(c => c.Text).IsRequired();
             modelBuilder.Entity<Comment>().Property(c => c.CreatedAt).IsRequired();
             modelBuilder.Entity<Comment>().Property(c => c.UpdatedAt).IsRequired();
-
-            modelBuilder.Entity<Comment>().Ignore(c => c.Post);
-            modelBuilder.Entity<Comment>().HasOne(c => c.Post).WithMany(p => p.Comments).HasForeignKey(c => c.PostId).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Post>().HasData(new Post
             {
