@@ -9,13 +9,13 @@ New-Module -Name LibraryTool -ScriptBlock {
             [string]$Command
         )
 
-        $commands = @{
+        $commands = [Ordered]@{
             "Install" = 'dotnet tool install --global dotnet-ef';
             "Uninstall" = 'dotnet tool uninstall --global dotnet-ef';
             "Update" = 'dotnet tool update --global dotnet-ef';
         }
 
-        Clear;
+        Write-Host;
 
         if ($commands.Keys -notcontains $Command) {
             Write-Host "Invalid command. Below is a list of available commands:";
@@ -34,9 +34,9 @@ New-Module -Name LibraryTool -ScriptBlock {
         Write-Host "Running command: $command";
         Write-Host;
 
-        $result = PowerShell -Command $command;
+        PowerShell -Command $command;
 
-        Write-Host $result;
+        Write-Host;
     }
 
     Export-ModuleMember -Function Tool;

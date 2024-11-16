@@ -12,14 +12,16 @@ New-Module -Name LibraryDatabase -ScriptBlock {
             [string]$Command
         )
 
-        Clear;
+        $basePath = $pwd;
+        $rootPath = Split-Path $pwd -Parent
+        $servicePath = "$($rootPath)\Services\$($Service)";
 
-        $servicePath = "$($pwd)\Services\$($Service)";
+        Write-Host;
 
         if (-not(Test-Path -Path $servicePath)) {
             Write-Host "Invalid service. Below is a list of available services:";
 
-            $availableServices = Get-ChildItem "$($pwd)\Services" -Directory | % {$_.FullName};
+            $availableServices = Get-ChildItem "$($rootPath)\Services" -Directory | % {$_.FullName};
 
             foreach ($availableService in $availableServices) {
                 $nameService = Split-Path $availableService -Leaf;
@@ -32,8 +34,9 @@ New-Module -Name LibraryDatabase -ScriptBlock {
             break;
         }
 
-        $commands = @{
+        $commands = [Ordered]@{
             "Update" = 'dotnet ef database update';
+            "Revert" = 'dotnet ef database update 0';
         }
 
         if ($commands.Keys -notcontains $Command) {
@@ -48,19 +51,19 @@ New-Module -Name LibraryDatabase -ScriptBlock {
             break;
         }
 
-        $basePath = $pwd;
         $command = $commands.$Command;
 
         Set-Location -Path $servicePath;
 
+        Write-Host "Current path: $servicePath";
         Write-Host "Running library command: $command";
         Write-Host;
 
-        $result = PowerShell -Command $command;
+        PowerShell -Command $command;
 
         Set-Location $basePath;
 
-        Write-Host $result;
+        Write-Host;
     }
 
     Export-ModuleMember -Function Database;

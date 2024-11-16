@@ -15,14 +15,16 @@ New-Module -Name LibraryMigration -ScriptBlock {
             [string]$Name
         )
 
-        Clear;
+        $basePath = $pwd;
+        $rootPath = Split-Path $pwd -Parent
+        $servicePath = "$($rootPath)\Services\$($Service)";
 
-        $servicePath = "$($pwd)\Services\$($Service)";
+        Write-Host;
 
         if (-not(Test-Path -Path $servicePath)) {
             Write-Host "Invalid service. Below is a list of available services:";
 
-            $availableServices = Get-ChildItem "$($pwd)\Services" -Directory | % {$_.FullName}
+            $availableServices = Get-ChildItem "$($rootPath)\Services" -Directory | % {$_.FullName}
 
             foreach ($availableService in $availableServices) {
                 $nameService = Split-Path $availableService -Leaf;
@@ -35,9 +37,8 @@ New-Module -Name LibraryMigration -ScriptBlock {
             break;
         }
 
-        $commands = @{
+        $commands = [Ordered]@{
             "Add" = 'dotnet ef migrations add';
-            "List" = 'dotnet ef migrations list';
             "Remove" = 'dotnet ef migrations remove';
         }
 
@@ -66,18 +67,17 @@ New-Module -Name LibraryMigration -ScriptBlock {
             $command = "$($commands.$Command)";
         }
 
-        $basePath = $pwd;
-
         Set-Location -Path $servicePath;
 
+        Write-Host "Current path: $servicePath";
         Write-Host "Running command: $command";
         Write-Host;
 
-        $result = PowerShell -Command $command;
+        PowerShell -Command $command;
 
         Set-Location $basePath;
 
-        Write-Host $result;
+        Write-Host;
     }
 
     Export-ModuleMember -Function Migration;
