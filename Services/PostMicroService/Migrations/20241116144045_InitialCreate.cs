@@ -115,9 +115,9 @@ namespace PostMicroService.Migrations
                 columns: new[] { "Id", "CreatedAt", "Title", "UpdatedAt", "Visible" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(287), "Post #1", new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(288), true },
-                    { 2, new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(307), "Post #2", new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(308), false },
-                    { 3, new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(316), "Post #3", new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(316), true }
+                    { 1, new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5885), "Post #1", new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5886), true },
+                    { 2, new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5906), "Post #2", new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5906), false },
+                    { 3, new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5920), "Post #3", new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5920), true }
                 });
 
             migrationBuilder.CreateIndex(

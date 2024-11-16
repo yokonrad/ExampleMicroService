@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CommentMicroService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241109163918_InitialCreate")]
+    [Migration("20241116144050_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -56,26 +56,26 @@ namespace CommentMicroService.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7154),
+                            CreatedAt = new DateTime(2024, 11, 16, 14, 40, 49, 830, DateTimeKind.Utc).AddTicks(2984),
                             PostId = 1,
                             Text = "Post #1 Comment #1",
-                            UpdatedAt = new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7154)
+                            UpdatedAt = new DateTime(2024, 11, 16, 14, 40, 49, 830, DateTimeKind.Utc).AddTicks(2984)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7169),
+                            CreatedAt = new DateTime(2024, 11, 16, 14, 40, 49, 830, DateTimeKind.Utc).AddTicks(2995),
                             PostId = 1,
                             Text = "Post #1 Comment #2",
-                            UpdatedAt = new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7169)
+                            UpdatedAt = new DateTime(2024, 11, 16, 14, 40, 49, 830, DateTimeKind.Utc).AddTicks(2996)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7180),
+                            CreatedAt = new DateTime(2024, 11, 16, 14, 40, 49, 830, DateTimeKind.Utc).AddTicks(3005),
                             PostId = 2,
                             Text = "Post #2 Comment #1",
-                            UpdatedAt = new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7180)
+                            UpdatedAt = new DateTime(2024, 11, 16, 14, 40, 49, 830, DateTimeKind.Utc).AddTicks(3006)
                         });
                 });
 

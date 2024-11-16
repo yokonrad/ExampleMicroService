@@ -61,9 +61,9 @@ namespace CommentMicroService.Migrations
                 columns: new[] { "Id", "CreatedAt", "PostId", "Text", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7154), 1, "Post #1 Comment #1", new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7154) },
-                    { 2, new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7169), 1, "Post #1 Comment #2", new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7169) },
-                    { 3, new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7180), 2, "Post #2 Comment #1", new DateTime(2024, 11, 9, 16, 39, 17, 709, DateTimeKind.Utc).AddTicks(7180) }
+                    { 1, new DateTime(2024, 11, 16, 14, 40, 49, 830, DateTimeKind.Utc).AddTicks(2984), 1, "Post #1 Comment #1", new DateTime(2024, 11, 16, 14, 40, 49, 830, DateTimeKind.Utc).AddTicks(2984) },
+                    { 2, new DateTime(2024, 11, 16, 14, 40, 49, 830, DateTimeKind.Utc).AddTicks(2995), 1, "Post #1 Comment #2", new DateTime(2024, 11, 16, 14, 40, 49, 830, DateTimeKind.Utc).AddTicks(2996) },
+                    { 3, new DateTime(2024, 11, 16, 14, 40, 49, 830, DateTimeKind.Utc).AddTicks(3005), 2, "Post #2 Comment #1", new DateTime(2024, 11, 16, 14, 40, 49, 830, DateTimeKind.Utc).AddTicks(3006) }
                 });
 
             migrationBuilder.CreateIndex(

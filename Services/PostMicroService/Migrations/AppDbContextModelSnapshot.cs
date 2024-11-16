@@ -221,25 +221,25 @@ namespace PostMicroService.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(287),
+                            CreatedAt = new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5885),
                             Title = "Post #1",
-                            UpdatedAt = new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(288),
+                            UpdatedAt = new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5886),
                             Visible = true
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(307),
+                            CreatedAt = new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5906),
                             Title = "Post #2",
-                            UpdatedAt = new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(308),
+                            UpdatedAt = new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5906),
                             Visible = false
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(316),
+                            CreatedAt = new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5920),
                             Title = "Post #3",
-                            UpdatedAt = new DateTime(2024, 11, 9, 16, 38, 52, 256, DateTimeKind.Utc).AddTicks(316),
+                            UpdatedAt = new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5920),
                             Visible = true
                         });
                 });
