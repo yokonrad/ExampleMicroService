@@ -1,17 +1,16 @@
-﻿using AutoMapper;
-using CommentMicroService.Data;
-using CommentMicroService.Dto;
+﻿using CommentMicroService.Dto;
+using CommentMicroService.Repositories;
 using CommentMicroService.Services.CommentCommands;
 
 namespace CommentMicroService.Services
 {
-    public class CommentService(AppDbContext appDbContext, IMapper mapper)
+    public class CommentService(ICommentRepository commentRepository) : ICommentService
     {
-        private readonly GetByIdCommand _getByIdCommand = new(appDbContext, mapper);
-        private readonly GetByPostIdCommand _getByPostIdCommand = new(appDbContext, mapper);
-        private readonly CreateCommand _createCommand = new(appDbContext, mapper);
-        private readonly UpdateCommand _updateCommand = new(appDbContext, mapper);
-        private readonly DeleteCommand _deleteCommand = new(appDbContext);
+        private readonly GetByIdCommand _getByIdCommand = new(commentRepository);
+        private readonly GetByPostIdCommand _getByPostIdCommand = new(commentRepository);
+        private readonly CreateCommand _createCommand = new(commentRepository);
+        private readonly UpdateCommand _updateCommand = new(commentRepository);
+        private readonly DeleteCommand _deleteCommand = new(commentRepository);
 
         public async Task<CommentDto> GetById(int id) => await _getByIdCommand.Execute(id);
 

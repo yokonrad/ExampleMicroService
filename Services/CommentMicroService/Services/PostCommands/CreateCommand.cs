@@ -1,24 +1,13 @@
-﻿using AutoMapper;
-using CommentMicroService.Data;
-using CommentMicroService.Dto;
-using CommentMicroService.Entities;
-using Shared.Exceptions;
+﻿using CommentMicroService.Dto;
+using CommentMicroService.Repositories;
 
 namespace CommentMicroService.Services.PostCommands
 {
-    internal class CreateCommand(AppDbContext appDbContext, IMapper mapper)
+    internal class CreateCommand(IPostRepository postRepository)
     {
-        internal async Task<bool> Execute(PostDto postDto)
+        internal async Task<bool> Execute(CreatePostDto createPostDto)
         {
-            var post = mapper.Map<Post>(postDto);
-
-            if (post is null) throw new MapperException();
-
-            appDbContext.Posts.Add(post);
-
-            var result = await appDbContext.SaveChangesAsync() > 0;
-
-            if (!result) throw new DatabaseException();
+            await postRepository.Create(createPostDto);
 
             return true;
         }

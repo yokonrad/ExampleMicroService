@@ -1,16 +1,15 @@
-﻿using AutoMapper;
-using CommentMicroService.Data;
-using CommentMicroService.Dto;
+﻿using CommentMicroService.Dto;
+using CommentMicroService.Repositories;
 using CommentMicroService.Services.PostCommands;
 
 namespace CommentMicroService.Services
 {
-    public class PostService(AppDbContext appDbContext, IMapper mapper)
+    public class PostService(IPostRepository postRepository) : IPostService
     {
-        private readonly CreateCommand _createCommand = new(appDbContext, mapper);
-        private readonly DeleteCommand _deleteCommand = new(appDbContext);
+        private readonly CreateCommand _createCommand = new(postRepository);
+        private readonly DeleteCommand _deleteCommand = new(postRepository);
 
-        public async Task<bool> Create(PostDto postDto) => await _createCommand.Execute(postDto);
+        public async Task<bool> Create(CreatePostDto createPostDto) => await _createCommand.Execute(createPostDto);
 
         public async Task<bool> Delete(int id) => await _deleteCommand.Execute(id);
     }

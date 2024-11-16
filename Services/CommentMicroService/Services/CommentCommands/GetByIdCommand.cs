@@ -1,24 +1,13 @@
-﻿using AutoMapper;
-using CommentMicroService.Data;
-using CommentMicroService.Dto;
-using Microsoft.EntityFrameworkCore;
-using Shared.Exceptions;
+﻿using CommentMicroService.Dto;
+using CommentMicroService.Repositories;
 
 namespace CommentMicroService.Services.CommentCommands
 {
-    internal class GetByIdCommand(AppDbContext appDbContext, IMapper mapper)
+    internal class GetByIdCommand(ICommentRepository commentRepository)
     {
         internal async Task<CommentDto> Execute(int id)
         {
-            var comment = await appDbContext.Comments.Include(x => x.Post).FirstOrDefaultAsync(x => x.Id == id);
-
-            if (comment is null) throw new NotFoundException();
-
-            var commentDto = mapper.Map<CommentDto>(comment);
-
-            if (commentDto is null) throw new MapperException();
-
-            return commentDto;
+            return await commentRepository.GetById(id);
         }
     }
 }
