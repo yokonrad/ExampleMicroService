@@ -1,5 +1,6 @@
 using CommentMicroService.Consumers;
 using CommentMicroService.Data;
+using CommentMicroService.Repositories;
 using CommentMicroService.Services;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,10 @@ namespace CommentMicroService
             });
             builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddScoped<IPostRepository, PostRepository>();
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+            builder.Services.AddScoped<IPostService, PostService>();
+            builder.Services.AddScoped<ICommentService, CommentService>();
             builder.Services.AddMassTransit(x =>
             {
                 x.AddConsumer<PostCreatedConsumer>();
@@ -42,8 +47,6 @@ namespace CommentMicroService
                 });
             });
             builder.Services.AddRouting(o => o.LowercaseUrls = true);
-            builder.Services.AddScoped<PostService>();
-            builder.Services.AddScoped<CommentService>();
             builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "Comment Service API", Version = "v1" }));
 
             var app = builder.Build();
