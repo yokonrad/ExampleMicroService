@@ -6,7 +6,7 @@ namespace CommentMicroService.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class CommentController(CommentService commentService) : ControllerBase
+    public class CommentController(ICommentService commentService) : ControllerBase
     {
         [HttpGet("{Id:int}")]
         public async Task<ActionResult<CommentDto>> GetById([FromRoute] int Id) => Ok(await commentService.GetById(Id));
