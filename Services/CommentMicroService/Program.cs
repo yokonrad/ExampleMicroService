@@ -33,6 +33,14 @@ namespace CommentMicroService
                 x.AddConsumer<PostCreatedConsumer>();
                 x.AddConsumer<PostDeletedConsumer>();
 
+                x.AddEntityFrameworkOutbox<AppDbContext>(o =>
+                {
+                    o.UseSqlServer();
+                    o.UseBusOutbox();
+                });
+
+                x.AddTransactionalEnlistmentBus();
+
                 x.SetKebabCaseEndpointNameFormatter();
 
                 x.UsingRabbitMq((context, cfg) =>

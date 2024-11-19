@@ -1,4 +1,5 @@
 ﻿using CommentMicroService.Entities;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace CommentMicroService.Data
@@ -11,6 +12,10 @@ namespace CommentMicroService.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.AddInboxStateEntity();
+            modelBuilder.AddOutboxMessageEntity();
+            modelBuilder.AddOutboxStateEntity();
 
             modelBuilder.Entity<Post>().HasIndex(p => p.Id).IsUnique();
             modelBuilder.Entity<Post>().Property(p => p.Id).IsRequired();
