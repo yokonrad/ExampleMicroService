@@ -1,4 +1,3 @@
-using CommentMicroService.Consumers;
 using CommentMicroService.Data;
 using CommentMicroService.Repositories;
 using CommentMicroService.Services;
@@ -6,6 +5,7 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Shared.Filters;
+using System.Reflection;
 
 namespace CommentMicroService
 {
@@ -16,7 +16,7 @@ namespace CommentMicroService
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            builder.Services.AddControllers(x => x.Filters.Add(typeof(ExceptionFilter))).AddNewtonsoftJson(o =>
+            builder.Services.AddControllers(o => o.Filters.Add(typeof(ExceptionFilter))).AddNewtonsoftJson(o =>
             {
                 o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 o.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
@@ -30,8 +30,7 @@ namespace CommentMicroService
             builder.Services.AddScoped<ICommentService, CommentService>();
             builder.Services.AddMassTransit(x =>
             {
-                x.AddConsumer<PostCreatedConsumer>();
-                x.AddConsumer<PostDeletedConsumer>();
+                x.AddConsumers(Assembly.GetExecutingAssembly());
 
                 x.AddEntityFrameworkOutbox<AppDbContext>(o =>
                 {

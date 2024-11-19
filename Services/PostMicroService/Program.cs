@@ -1,11 +1,11 @@
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using PostMicroService.Consumers;
 using PostMicroService.Data;
 using PostMicroService.Repositories;
 using PostMicroService.Services;
 using Shared.Filters;
+using System.Reflection;
 
 namespace PostMicroService
 {
@@ -16,7 +16,7 @@ namespace PostMicroService
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            builder.Services.AddControllers(x => x.Filters.Add(typeof(ExceptionFilter))).AddNewtonsoftJson(o =>
+            builder.Services.AddControllers(o => o.Filters.Add(typeof(ExceptionFilter))).AddNewtonsoftJson(o =>
             {
                 o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 o.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
@@ -28,8 +28,7 @@ namespace PostMicroService
             builder.Services.AddScoped<IPostService, PostService>();
             builder.Services.AddMassTransit(x =>
             {
-                x.AddConsumer<PostNotCreatedConsumer>();
-                x.AddConsumer<PostNotDeletedConsumer>();
+                x.AddConsumers(Assembly.GetExecutingAssembly());
 
                 x.AddEntityFrameworkOutbox<AppDbContext>(o =>
                 {
@@ -53,7 +52,7 @@ namespace PostMicroService
                 });
             });
             builder.Services.AddRouting(o => o.LowercaseUrls = true);
-            builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "Post Service API", Version = "v1" }));
+            builder.Services.AddSwaggerGen(o => o.SwaggerDoc("v1", new OpenApiInfo { Title = "Post Service API", Version = "v1" }));
 
             var app = builder.Build();
 
