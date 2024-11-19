@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CommentMicroService.Data
 {
-    public class AppDbContext(DbContextOptions options) : DbContext(options)
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
