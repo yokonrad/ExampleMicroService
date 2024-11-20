@@ -11,7 +11,7 @@ namespace Shared.Filters
         {
             switch (context.Exception)
             {
-                case DatabaseException:
+                case InvalidDatabaseResultException:
                 case InvalidHttpResponseException:
                 case InvalidResponseException:
                     context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);

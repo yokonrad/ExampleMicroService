@@ -16,7 +16,7 @@ namespace PostMicroService.Repositories.PostCommands
 
             var httpResponseMessage = await httpClient.GetAsync($"{configuration["Services:CommentService"]}/api/v1/comment/{id}/post");
 
-            if (!httpResponseMessage.IsSuccessStatusCode) throw new NotFoundException();
+            if (!httpResponseMessage.IsSuccessStatusCode) throw new InvalidHttpResponseException();
 
             var postDto = mapper.Map<PostDto>(post);
             var commentsDto = JsonConvert.DeserializeObject<IEnumerable<CommentDto>>(await httpResponseMessage.Content.ReadAsStringAsync());

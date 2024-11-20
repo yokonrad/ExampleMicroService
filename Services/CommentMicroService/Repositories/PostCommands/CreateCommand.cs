@@ -16,7 +16,7 @@ namespace CommentMicroService.Repositories.PostCommands
 
             var result = await appDbContext.SaveChangesAsync() > 0;
 
-            if (!result) throw new DatabaseException();
+            if (!result) throw new InvalidDatabaseResultException();
 
             return mapper.Map<PostDto>(post);
         }
