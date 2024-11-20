@@ -5,7 +5,6 @@
       "SwaggerKey": "post",
       "DownstreamPathTemplate": "/api/v1/post/{everything}",
       "UpstreamPathTemplate": "/post/{everything}"
-
     },
     {
       "ServiceName": "comment",
