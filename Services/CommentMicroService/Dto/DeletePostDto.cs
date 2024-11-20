@@ -1,6 +1,6 @@
 ﻿namespace CommentMicroService.Dto
 {
-    public record class CreatePostDto
+    public record class DeletePostDto
     {
         public int Id { get; init; }
     }

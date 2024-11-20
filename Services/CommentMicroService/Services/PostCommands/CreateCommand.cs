@@ -5,11 +5,9 @@ namespace CommentMicroService.Services.PostCommands
 {
     internal class CreateCommand(IPostRepository postRepository)
     {
-        internal async Task<bool> Execute(CreatePostDto createPostDto)
+        internal async Task<PostDto> Execute(CreatePostDto createPostDto)
         {
-            await postRepository.Create(createPostDto);
-
-            return true;
+            return await postRepository.Create(createPostDto);
         }
     }
 }

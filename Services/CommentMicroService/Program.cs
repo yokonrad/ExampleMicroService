@@ -1,3 +1,4 @@
+using CommentMicroService.Consumers;
 using CommentMicroService.Data;
 using CommentMicroService.Repositories;
 using CommentMicroService.Services;
@@ -5,7 +6,6 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Shared.Filters;
-using System.Reflection;
 
 namespace CommentMicroService
 {
@@ -30,7 +30,8 @@ namespace CommentMicroService
             builder.Services.AddScoped<ICommentService, CommentService>();
             builder.Services.AddMassTransit(x =>
             {
-                x.AddConsumers(Assembly.GetExecutingAssembly());
+                x.AddConsumer<PostCreatedConsumer>();
+                x.AddConsumer<PostDeletedConsumer>();
 
                 x.AddEntityFrameworkOutbox<AppDbContext>(o =>
                 {
@@ -54,7 +55,7 @@ namespace CommentMicroService
                 });
             });
             builder.Services.AddRouting(o => o.LowercaseUrls = true);
-            builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "Comment Service API", Version = "v1" }));
+            builder.Services.AddSwaggerGen(o => o.SwaggerDoc("v1", new OpenApiInfo { Title = "Comment Service API", Version = "v1" }));
 
             var app = builder.Build();
 

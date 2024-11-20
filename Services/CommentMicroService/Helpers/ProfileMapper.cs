@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CommentMicroService.Dto;
 using CommentMicroService.Entities;
-using Shared.Events;
+using Shared.Requests;
 
 namespace CommentMicroService.Helpers
 {
@@ -12,8 +12,10 @@ namespace CommentMicroService.Helpers
             CreateMap<Post, PostDto>();
             CreateMap<PostDto, Post>();
 
-            CreateMap<PostCreated, PostDto>();
-            CreateMap<PostDeleted, PostDto>();
+            CreateMap<CreatePostDto, Post>();
+
+            CreateMap<CreatePostRequest, CreatePostDto>();
+            CreateMap<DeletePostRequest, DeletePostDto>();
 
             CreateMap<Comment, CommentDto>();
             CreateMap<CommentDto, Comment>();

@@ -4,8 +4,8 @@ using Microsoft.OpenApi.Models;
 using PostMicroService.Data;
 using PostMicroService.Repositories;
 using PostMicroService.Services;
+using PostMicroService.States;
 using Shared.Filters;
-using System.Reflection;
 
 namespace PostMicroService
 {
@@ -28,12 +28,17 @@ namespace PostMicroService
             builder.Services.AddScoped<IPostService, PostService>();
             builder.Services.AddMassTransit(x =>
             {
-                x.AddConsumers(Assembly.GetExecutingAssembly());
-
                 x.AddEntityFrameworkOutbox<AppDbContext>(o =>
                 {
                     o.UseSqlServer();
                     o.UseBusOutbox();
+                });
+
+                x.AddSagaStateMachine<PostStateMachine, PostStateInstance>().EntityFrameworkRepository(r =>
+                {
+                    r.ConcurrencyMode = ConcurrencyMode.Pessimistic;
+
+                    r.AddDbContext<DbContext, PostStateDbContext>((_, c) => c.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
                 });
 
                 x.AddTransactionalEnlistmentBus();

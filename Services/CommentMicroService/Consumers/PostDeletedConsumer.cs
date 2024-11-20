@@ -2,30 +2,35 @@
 using CommentMicroService.Dto;
 using CommentMicroService.Services;
 using MassTransit;
-using Shared.Events;
-using Shared.Exceptions;
+using Shared.Messages;
+using Shared.Requests;
 
 namespace CommentMicroService.Consumers
 {
-    public class PostDeletedConsumer(PostService postService, ILogger<PostDeletedConsumer> logger, IMapper mapper, IPublishEndpoint publishEndpoint) : IConsumer<PostDeleted>
+    public class PostDeletedConsumer(IPostService postService, ILogger<PostDeletedConsumer> logger, IMapper mapper, IPublishEndpoint publishEndpoint) : IConsumer<DeletePostRequest>
     {
-        public async Task Consume(ConsumeContext<PostDeleted> postDeleted)
+        public async Task Consume(ConsumeContext<DeletePostRequest> deletePostRequest)
         {
             try
             {
-                logger.LogInformation("Consuming PostDeleted with id: {Id}", postDeleted.Message.Id);
+                var deletePostDto = mapper.Map<DeletePostDto>(deletePostRequest.Message);
 
-                var postDto = mapper.Map<PostDto>(postDeleted.Message);
+                logger.LogInformation("Consuming DeletePostRequest with id: {Id}", deletePostDto.Id);
 
-                if (postDto is null) throw new MapperException();
+                await postService.Delete(deletePostDto.Id);
 
-                await postService.Delete(postDto.Id);
+                await publishEndpoint.Publish(new PostDeletedMessage
+                {
+                    CorrelationId = deletePostRequest.CorrelationId,
+                    Id = deletePostRequest.Message.Id,
+                });
             }
             catch (Exception ex)
             {
-                await publishEndpoint.Publish(new PostNotDeleted
+                await publishEndpoint.Publish(new PostNotDeletedMessage
                 {
-                    Id = postDeleted.Message.Id,
+                    CorrelationId = deletePostRequest.CorrelationId,
+                    Id = deletePostRequest.Message.Id,
                     Message = ex.Message,
                 });
             }

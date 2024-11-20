@@ -9,7 +9,7 @@ namespace CommentMicroService.Services
         private readonly CreateCommand _createCommand = new(postRepository);
         private readonly DeleteCommand _deleteCommand = new(postRepository);
 
-        public async Task<bool> Create(CreatePostDto createPostDto) => await _createCommand.Execute(createPostDto);
+        public async Task<PostDto> Create(CreatePostDto createPostDto) => await _createCommand.Execute(createPostDto);
 
         public async Task<bool> Delete(int id) => await _deleteCommand.Execute(id);
     }

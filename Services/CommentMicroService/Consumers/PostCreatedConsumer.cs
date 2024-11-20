@@ -2,30 +2,35 @@
 using CommentMicroService.Dto;
 using CommentMicroService.Services;
 using MassTransit;
-using Shared.Events;
-using Shared.Exceptions;
+using Shared.Messages;
+using Shared.Requests;
 
 namespace CommentMicroService.Consumers
 {
-    public class PostCreatedConsumer(PostService postService, ILogger<PostCreatedConsumer> logger, IMapper mapper, IPublishEndpoint publishEndpoint) : IConsumer<PostCreated>
+    public class PostCreatedConsumer(IPostService postService, ILogger<PostCreatedConsumer> logger, IMapper mapper, IPublishEndpoint publishEndpoint) : IConsumer<CreatePostRequest>
     {
-        public async Task Consume(ConsumeContext<PostCreated> postCreated)
+        public async Task Consume(ConsumeContext<CreatePostRequest> createPostRequest)
         {
             try
             {
-                logger.LogInformation("Consuming PostCreated with id: {Id}", postCreated.Message.Id);
+                var createPostDto = mapper.Map<CreatePostDto>(createPostRequest.Message);
 
-                var postDto = mapper.Map<PostDto>(postCreated.Message);
+                logger.LogInformation("Consuming CreatePostRequest with id: {Id}", createPostDto.Id);
 
-                if (postDto is null) throw new MapperException();
+                await postService.Create(createPostDto);
 
-                await postService.Create(postDto);
+                await publishEndpoint.Publish(new PostCreatedMessage
+                {
+                    CorrelationId = createPostRequest.CorrelationId,
+                    Id = createPostRequest.Message.Id,
+                });
             }
             catch (Exception ex)
             {
-                await publishEndpoint.Publish(new PostNotCreated
+                await publishEndpoint.Publish(new PostNotCreatedMessage
                 {
-                    Id = postCreated.Message.Id,
+                    CorrelationId = createPostRequest.CorrelationId,
+                    Id = createPostRequest.Message.Id,
                     Message = ex.Message,
                 });
             }

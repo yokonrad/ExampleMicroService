@@ -3,6 +3,7 @@ using MassTransit;
 using PostMicroService.Dto;
 using PostMicroService.Repositories;
 using PostMicroService.Services.PostCommands;
+using Shared.Requests;
 
 namespace PostMicroService.Services
 {
@@ -15,14 +16,14 @@ namespace PostMicroService.Services
         private readonly UpdateCommand _updateCommand;
         private readonly DeleteCommand _deleteCommand;
 
-        public PostService(IPostRepository postRepository, IMapper mapper, IPublishEndpoint publishEndpoint)
+        public PostService(IPostRepository postRepository, IMapper mapper, IRequestClient<CreatePostRequest> createPostRequestClient, IRequestClient<DeletePostRequest> deletePostRequestClient)
         {
             _getAllCommand = new(postRepository);
             _getByIdCommand = new(postRepository);
             _getByIdCommentCommand = new(postRepository);
-            _createCommand = new(postRepository, mapper, publishEndpoint);
+            _createCommand = new(postRepository, mapper, createPostRequestClient);
             _updateCommand = new(postRepository);
-            _deleteCommand = new(postRepository, mapper, publishEndpoint);
+            _deleteCommand = new(postRepository, mapper, deletePostRequestClient);
         }
 
         public async Task<IEnumerable<PostDto>> GetAll() => await _getAllCommand.Execute();

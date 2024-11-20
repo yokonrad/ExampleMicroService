@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using PostMicroService.Dto;
 using PostMicroService.Entities;
-using Shared.Events;
+using Shared.Requests;
 
 namespace PostMicroService.Helpers
 {
@@ -15,8 +15,8 @@ namespace PostMicroService.Helpers
             CreateMap<CreatePostDto, Post>();
             CreateMap<UpdatePostDto, Post>();
 
-            CreateMap<PostDto, PostCreated>();
-            CreateMap<PostDto, PostDeleted>();
+            CreateMap<PostDto, CreatePostRequest>();
+            CreateMap<PostDto, DeletePostRequest>();
         }
     }
 }
