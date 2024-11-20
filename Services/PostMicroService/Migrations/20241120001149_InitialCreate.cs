@@ -115,9 +115,9 @@ namespace PostMicroService.Migrations
                 columns: new[] { "Id", "CreatedAt", "Title", "UpdatedAt", "Visible" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5885), "Post #1", new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5886), true },
-                    { 2, new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5906), "Post #2", new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5906), false },
-                    { 3, new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5920), "Post #3", new DateTime(2024, 11, 16, 14, 40, 45, 11, DateTimeKind.Utc).AddTicks(5920), true }
+                    { 1, new DateTime(2024, 11, 20, 0, 11, 49, 739, DateTimeKind.Utc).AddTicks(7287), "Post #1", new DateTime(2024, 11, 20, 0, 11, 49, 739, DateTimeKind.Utc).AddTicks(7288), true },
+                    { 2, new DateTime(2024, 11, 20, 0, 11, 49, 739, DateTimeKind.Utc).AddTicks(7314), "Post #2", new DateTime(2024, 11, 20, 0, 11, 49, 739, DateTimeKind.Utc).AddTicks(7314), false },
+                    { 3, new DateTime(2024, 11, 20, 0, 11, 49, 739, DateTimeKind.Utc).AddTicks(7324), "Post #3", new DateTime(2024, 11, 20, 0, 11, 49, 739, DateTimeKind.Utc).AddTicks(7324), true }
                 });
 
             migrationBuilder.CreateIndex(
