@@ -50,8 +50,32 @@ if ($commandsWithNameParam -contains $commandParam) {
 }
 
 switch -Wildcard ($commandParam) {
-    'Database*' { PowerShell -Command "Import-Module -Force '.\library_database.ps1'; $command -Service PostMicroService; $command -Service CommentMicroService"; }
-    'Docker*' { PowerShell -Command "Import-Module -Force '.\library_docker.ps1'; $command"; }
-    'Migration*' { PowerShell -Command "Import-Module -Force '.\library_migration.ps1'; $command -Service PostMicroService; $command -Service CommentMicroService;"; }
-    'Tool*' { PowerShell -Command "Import-Module -Force '.\library_tool.ps1'; $command"; }
+    'Database*' {
+        PowerShell -Command "
+            Import-Module -Force '.\library_database.ps1';
+            $command -Service PostMicroService -Context AppDbContext;
+            $command -Service PostMicroService -Context PostStateDbContext;
+            $command -Service CommentMicroService -Context AppDbContext;
+        ";
+    }
+    'Docker*' {
+        PowerShell -Command "
+            Import-Module -Force '.\library_docker.ps1';
+            $command;
+        ";
+    }
+    'Migration*' {
+        PowerShell -Command "
+            Import-Module -Force '.\library_migration.ps1';
+            $command -Service PostMicroService -Context AppDbContext;
+            $command -Service PostMicroService -Context PostStateDbContext;
+            $command -Service CommentMicroService -Context AppDbContext;
+        ";
+    }
+    'Tool*' {
+        PowerShell -Command "
+            Import-Module -Force '.\library_tool.ps1';
+            $command;
+        ";
+    }
 }

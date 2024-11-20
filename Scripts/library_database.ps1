@@ -9,7 +9,10 @@ New-Module -Name LibraryDatabase -ScriptBlock {
             [string]$Service,
 
             [Parameter(Mandatory=$true)]
-            [string]$Command
+            [string]$Command,
+
+            [Parameter(Mandatory=$true)]
+            [string]$Context
         )
 
         $basePath = $pwd;
@@ -26,7 +29,7 @@ New-Module -Name LibraryDatabase -ScriptBlock {
             foreach ($availableService in $availableServices) {
                 $nameService = Split-Path $availableService -Leaf;
 
-                Write-Host "- $($nameService)";
+                Write-Host "- $nameService";
             }
 
             Write-Host;
@@ -43,7 +46,7 @@ New-Module -Name LibraryDatabase -ScriptBlock {
             Write-Host "Invalid command. Below is a list of available commands:";
 
             foreach ($command in $commands.Keys) {
-                Write-Host "- $($command)";
+                Write-Host "- $command";
             }
 
             Write-Host;
@@ -51,7 +54,14 @@ New-Module -Name LibraryDatabase -ScriptBlock {
             break;
         }
 
-        $command = $commands.$Command;
+        if ($([string]::IsNullOrWhiteSpace($Context)) -eq $true) {
+            Write-Host "Invalid context. Provide a valid value.";
+            Write-Host;
+
+            break;
+        }
+
+        $command = "$($commands.$Command) --context $Context";
 
         Set-Location -Path $servicePath;
 

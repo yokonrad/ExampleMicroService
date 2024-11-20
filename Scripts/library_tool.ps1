@@ -21,7 +21,7 @@ New-Module -Name LibraryTool -ScriptBlock {
             Write-Host "Invalid command. Below is a list of available commands:";
 
             foreach ($command in $commands.Keys) {
-                Write-Host "- $($command)";
+                Write-Host "- $command";
             }
 
             Write-Host;

@@ -11,6 +11,9 @@ New-Module -Name LibraryMigration -ScriptBlock {
             [Parameter(Mandatory=$true)]
             [string]$Command,
 
+            [Parameter(Mandatory=$true)]
+            [string]$Context,
+
             [Parameter(Mandatory=$false)]
             [string]$Name
         )
@@ -29,7 +32,7 @@ New-Module -Name LibraryMigration -ScriptBlock {
             foreach ($availableService in $availableServices) {
                 $nameService = Split-Path $availableService -Leaf;
 
-                Write-Host "- $($nameService)";
+                Write-Host "- $nameService";
             }
 
             Write-Host;
@@ -46,7 +49,7 @@ New-Module -Name LibraryMigration -ScriptBlock {
             Write-Host "Invalid command. Below is a list of available commands:";
 
             foreach ($command in $commands.Keys) {
-                Write-Host "- $($command)";
+                Write-Host "- $command";
             }
 
             Write-Host;
@@ -54,9 +57,16 @@ New-Module -Name LibraryMigration -ScriptBlock {
             break;
         }
 
+        if ($([string]::IsNullOrWhiteSpace($Context)) -eq $true) {
+            Write-Host "Invalid context. Provide a valid value.";
+            Write-Host;
+
+            break;
+        }
+
         if ($Command -eq "Add") {
             if ($([string]::IsNullOrWhiteSpace($Name)) -eq $true) {
-                Write-Host "Invalid name of migration. Provide a valid value.";
+                Write-Host "Invalid name. Provide a valid value.";
                 Write-Host;
 
                 break;
@@ -64,8 +74,10 @@ New-Module -Name LibraryMigration -ScriptBlock {
 
             $command = "$($commands.$Command) $Name";
         } else {
-            $command = "$($commands.$Command)";
+            $command = $commands.$Command;
         }
+
+        $command = "$command --context $Context";
 
         Set-Location -Path $servicePath;
 
