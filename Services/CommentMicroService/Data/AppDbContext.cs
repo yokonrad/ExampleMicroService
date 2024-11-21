@@ -30,48 +30,6 @@ namespace CommentMicroService.Data
             modelBuilder.Entity<Comment>().Property(c => c.Text).IsRequired();
             modelBuilder.Entity<Comment>().Property(c => c.CreatedAt).IsRequired();
             modelBuilder.Entity<Comment>().Property(c => c.UpdatedAt).IsRequired();
-
-            modelBuilder.Entity<Post>().HasData(new Post
-            {
-                Id = 1,
-            });
-
-            modelBuilder.Entity<Post>().HasData(new Post
-            {
-                Id = 2,
-            });
-
-            modelBuilder.Entity<Post>().HasData(new Post
-            {
-                Id = 3,
-            });
-
-            modelBuilder.Entity<Comment>().HasData(new Comment
-            {
-                Id = 1,
-                PostId = 1,
-                Text = "Post #1 Comment #1",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-            });
-
-            modelBuilder.Entity<Comment>().HasData(new Comment
-            {
-                Id = 2,
-                PostId = 1,
-                Text = "Post #1 Comment #2",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-            });
-
-            modelBuilder.Entity<Comment>().HasData(new Comment
-            {
-                Id = 3,
-                PostId = 2,
-                Text = "Post #2 Comment #1",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-            });
         }
     }
 }
