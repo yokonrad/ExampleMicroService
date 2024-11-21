@@ -14,11 +14,11 @@ namespace PostMicroService.Repositories
         private readonly UpdateCommand _updateCommand;
         private readonly DeleteCommand _deleteCommand;
 
-        public PostRepository(AppDbContext appDbContext, IMapper mapper, HttpClient httpClient, IConfiguration configuration)
+        public PostRepository(AppDbContext appDbContext, IMapper mapper, IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _getAllCommand = new(appDbContext, mapper);
             _getByIdCommand = new(appDbContext, mapper);
-            _getByIdCommentCommand = new(appDbContext, mapper, httpClient, configuration);
+            _getByIdCommentCommand = new(appDbContext, mapper, httpClientFactory, configuration);
             _createCommand = new(appDbContext, mapper);
             _updateCommand = new(appDbContext, mapper);
             _deleteCommand = new(appDbContext, mapper);

@@ -6,7 +6,7 @@ using Shared.Exceptions;
 
 namespace PostMicroService.Repositories.PostCommands
 {
-    internal class GetByIdCommentCommand(AppDbContext appDbContext, IMapper mapper, HttpClient httpClient, IConfiguration configuration)
+    internal class GetByIdCommentCommand(AppDbContext appDbContext, IMapper mapper, IHttpClientFactory httpClientFactory, IConfiguration configuration)
     {
         internal async Task<PostCommentDto> Execute(int id)
         {
@@ -14,7 +14,7 @@ namespace PostMicroService.Repositories.PostCommands
 
             if (post is null) throw new NotFoundException();
 
-            var httpResponseMessage = await httpClient.GetAsync($"{configuration["Services:CommentService"]}/api/v1/comment/{id}/post");
+            var httpResponseMessage = await httpClientFactory.CreateClient().GetAsync($"{configuration["Services:CommentService"]}/api/v1/comment/{id}/post");
 
             if (!httpResponseMessage.IsSuccessStatusCode) throw new InvalidHttpResponseException();
 

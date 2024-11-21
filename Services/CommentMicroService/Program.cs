@@ -16,7 +16,7 @@ namespace CommentMicroService
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            builder.Services.AddControllers(o => o.Filters.Add(typeof(ExceptionFilter))).AddNewtonsoftJson(o =>
+            builder.Services.AddControllers(o => o.Filters.Add<ExceptionFilter>()).AddNewtonsoftJson(o =>
             {
                 o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 o.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;

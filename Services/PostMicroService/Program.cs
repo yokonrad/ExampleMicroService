@@ -16,7 +16,7 @@ namespace PostMicroService
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            builder.Services.AddControllers(o => o.Filters.Add(typeof(ExceptionFilter))).AddNewtonsoftJson(o =>
+            builder.Services.AddControllers(o => o.Filters.Add<ExceptionFilter>()).AddNewtonsoftJson(o =>
             {
                 o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 o.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
@@ -24,7 +24,8 @@ namespace PostMicroService
             });
             builder.Services.AddDbContext<AppDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddHttpClient<IPostRepository, PostRepository>();
+            builder.Services.AddHttpClient();
+            builder.Services.AddScoped<IPostRepository, PostRepository>();
             builder.Services.AddScoped<IPostService, PostService>();
             builder.Services.AddMassTransit(x =>
             {
