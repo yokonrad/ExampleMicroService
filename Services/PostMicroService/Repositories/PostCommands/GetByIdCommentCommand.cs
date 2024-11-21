@@ -19,7 +19,7 @@ namespace PostMicroService.Repositories.PostCommands
             if (!httpResponseMessage.IsSuccessStatusCode) throw new InvalidHttpResponseException();
 
             var postDto = mapper.Map<PostDto>(post);
-            var commentsDto = JsonConvert.DeserializeObject<IEnumerable<CommentDto>>(await httpResponseMessage.Content.ReadAsStringAsync());
+            var commentsDto = JsonConvert.DeserializeObject<CommentDto[]>(await httpResponseMessage.Content.ReadAsStringAsync());
 
             return new PostCommentDto
             {

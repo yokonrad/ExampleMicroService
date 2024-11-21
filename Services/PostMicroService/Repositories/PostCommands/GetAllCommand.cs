@@ -13,7 +13,7 @@ namespace PostMicroService.Repositories.PostCommands
 
             if (posts.Count == 0) return [];
 
-            return mapper.Map<IEnumerable<PostDto>>(posts);
+            return mapper.Map<PostDto[]>(posts.ToArray());
         }
     }
 }
