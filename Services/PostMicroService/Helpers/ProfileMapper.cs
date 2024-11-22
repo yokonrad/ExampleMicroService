@@ -12,6 +12,14 @@ namespace PostMicroService.Helpers
             CreateMap<Post, PostDto>();
             CreateMap<PostDto, Post>();
 
+            CreateMap<(PostDto postDto, CommentDto[] commentsDto), PostCommentDto>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.postDto.Id))
+                .ForMember(x => x.Title, opt => opt.MapFrom(x => x.postDto.Title))
+                .ForMember(x => x.Visible, opt => opt.MapFrom(x => x.postDto.Visible))
+                .ForMember(x => x.CreatedAt, opt => opt.MapFrom(x => x.postDto.CreatedAt))
+                .ForMember(x => x.UpdatedAt, opt => opt.MapFrom(x => x.postDto.UpdatedAt))
+                .ForMember(x => x.Comments, opt => opt.MapFrom(x => x.commentsDto));
+
             CreateMap<CreatePostDto, Post>();
             CreateMap<UpdatePostDto, Post>();
 

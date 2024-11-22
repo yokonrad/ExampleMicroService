@@ -21,15 +21,7 @@ namespace PostMicroService.Repositories.PostCommands
             var postDto = mapper.Map<PostDto>(post);
             var commentsDto = JsonConvert.DeserializeObject<CommentDto[]>(await httpResponseMessage.Content.ReadAsStringAsync());
 
-            return new PostCommentDto
-            {
-                Id = postDto.Id,
-                Title = postDto.Title,
-                Visible = postDto.Visible,
-                CreatedAt = postDto.CreatedAt,
-                UpdatedAt = postDto.UpdatedAt,
-                Comments = commentsDto ?? [],
-            };
+            return mapper.Map<PostCommentDto>((postDto, commentsDto));
         }
     }
 }
