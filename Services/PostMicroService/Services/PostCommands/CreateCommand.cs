@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
-using MassTransit;
 using PostMicroService.Dto;
 using PostMicroService.Repositories;
-using Shared.Exceptions;
+using PostMicroService.Requests;
 using Shared.Requests;
-using Shared.Responds;
 using System.Transactions;
 
 namespace PostMicroService.Services.PostCommands
 {
-    internal class CreateCommand(IPostRepository postRepository, IMapper mapper, IRequestClient<CreatePostRequest> createPostRequestClient)
+    internal class CreateCommand(IPostRepository postRepository, IPostRequest postRequest, IMapper mapper)
     {
         internal async Task<PostDto> Execute(CreatePostDto createPostDto)
         {
@@ -19,9 +17,7 @@ namespace PostMicroService.Services.PostCommands
 
             var createPostRequest = mapper.Map<CreatePostRequest>(postDto);
 
-            var response = await createPostRequestClient.GetResponse<PostCreatedRespond, PostNotCreatedRespond>(createPostRequest);
-
-            if (response.Is(out Response<PostNotCreatedRespond>? _)) throw new InvalidResponseException();
+            await postRequest.Create(createPostRequest);
 
             transaction.Complete();
 

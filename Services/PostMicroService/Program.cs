@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PostMicroService.Data;
 using PostMicroService.Repositories;
+using PostMicroService.Requests;
 using PostMicroService.Services;
 using PostMicroService.States;
 using Shared.Filters;
@@ -27,6 +28,7 @@ namespace PostMicroService
             builder.Services.AddHttpClient();
             builder.Services.AddScoped<IPostRepository, PostRepository>();
             builder.Services.AddScoped<IPostService, PostService>();
+            builder.Services.AddScoped<IPostRequest, PostRequest>();
             builder.Services.AddMassTransit(x =>
             {
                 x.AddEntityFrameworkOutbox<AppDbContext>(o =>
