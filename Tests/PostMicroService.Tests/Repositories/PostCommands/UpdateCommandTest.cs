@@ -61,7 +61,7 @@ namespace PostMicroService.Tests.Repositories.PostCommands
         public async Task Update_Throws_InvalidDatabaseResultException()
         {
             // Arrange
-            IEnumerable<Post> posts = [new Fixture().Build<Post>().Create()];
+            IEnumerable<Post> posts = new Fixture().Build<Post>().CreateMany(10).ToArray();
             var postDto = mapper.Map<PostDto>(posts.First());
             var updatePostDto = new Fixture().Build<UpdatePostDto>().Create();
 
@@ -84,7 +84,7 @@ namespace PostMicroService.Tests.Repositories.PostCommands
         public async Task Update_Returns_NotNullObject()
         {
             // Arrange
-            IEnumerable<Post> posts = [new Fixture().Build<Post>().Create()];
+            IEnumerable<Post> posts = new Fixture().Build<Post>().CreateMany(10).ToArray();
             var postDto = mapper.Map<PostDto>(posts.First());
             var updatePostDto = new Fixture().Build<UpdatePostDto>().Create();
 
@@ -100,7 +100,7 @@ namespace PostMicroService.Tests.Repositories.PostCommands
             var act = await postRepository.Update(postDto.Id, updatePostDto);
 
             // Assert
-            act.Should().BeOfType<PostDto>().And.NotBeNull().And.BeEquivalentTo(updatePostDto);
+            act.Should().BeAssignableTo<PostDto>().And.NotBeNull().And.BeEquivalentTo(updatePostDto);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace PostMicroService.Tests.Repositories.PostCommands
         public async Task GetById_Returns_NotNullObject()
         {
             // Arrange
-            IEnumerable<Post> posts = [new Fixture().Build<Post>().Create()];
+            IEnumerable<Post> posts = new Fixture().Build<Post>().CreateMany(10).ToArray();
             var postDto = mapper.Map<PostDto>(posts.First());
 
             var postsDbSetMock = posts.BuildMock().BuildMockDbSet();
@@ -74,7 +74,7 @@ namespace PostMicroService.Tests.Repositories.PostCommands
             var act = await postRepository.GetById(postDto.Id);
 
             // Assert
-            act.Should().BeOfType<PostDto>().And.NotBeNull().And.BeEquivalentTo(postDto);
+            act.Should().BeAssignableTo<PostDto>().And.NotBeNull().And.BeEquivalentTo(postDto);
         }
     }
 }

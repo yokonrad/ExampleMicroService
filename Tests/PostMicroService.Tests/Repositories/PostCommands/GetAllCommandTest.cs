@@ -39,7 +39,7 @@ namespace PostMicroService.Tests.Repositories.PostCommands
         {
             // Arrange
             IEnumerable<Post> posts = [];
-            var postsDto = mapper.Map<PostDto[]>(posts);
+            var postsDto = mapper.Map<IEnumerable<PostDto>>(posts);
 
             var postDbSetMock = posts.BuildMock().BuildMockDbSet();
 
@@ -51,15 +51,15 @@ namespace PostMicroService.Tests.Repositories.PostCommands
             var act = await postRepository.GetAll();
 
             // Assert
-            act.Should().BeOfType<PostDto[]>().And.BeEmpty().And.BeEquivalentTo(postsDto);
+            act.Should().BeAssignableTo<IEnumerable<PostDto>>().And.BeEmpty().And.BeEquivalentTo(postsDto);
         }
 
         [Test]
         public async Task GetAll_Returns_NotEmptyCollection()
         {
             // Arrange
-            IEnumerable<Post> posts = [new Fixture().Build<Post>().Create()];
-            var postsDto = mapper.Map<PostDto[]>(posts.ToArray());
+            IEnumerable<Post> posts = new Fixture().Build<Post>().CreateMany(10).ToArray();
+            var postsDto = mapper.Map<IEnumerable<PostDto>>(posts);
 
             var postDbSetMock = posts.BuildMock().BuildMockDbSet();
 
@@ -71,7 +71,7 @@ namespace PostMicroService.Tests.Repositories.PostCommands
             var act = await postRepository.GetAll();
 
             // Assert
-            act.Should().BeOfType<PostDto[]>().And.NotBeEmpty().And.BeEquivalentTo(postsDto);
+            act.Should().BeAssignableTo<IEnumerable<PostDto>>().And.NotBeEmpty().And.BeEquivalentTo(postsDto);
         }
     }
 }

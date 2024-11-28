@@ -63,7 +63,7 @@ namespace PostMicroService.Tests.Repositories.PostCommands
         public async Task GetByIdComment_Throws_InvalidHttpResponseException()
         {
             // Arrange
-            IEnumerable<Post> posts = [new Fixture().Build<Post>().Create()];
+            IEnumerable<Post> posts = new Fixture().Build<Post>().CreateMany(10).ToArray();
             var postDto = mapper.Map<PostDto>(posts.First());
 
             var postsDbSetMock = posts.BuildMock().BuildMockDbSet();
@@ -87,13 +87,12 @@ namespace PostMicroService.Tests.Repositories.PostCommands
         }
 
         [Test]
-        public async Task GetByIdComment_ReturnsNotNullObject_WithoutComments()
+        public async Task GetByIdComment_Returns_NotNullObject_WithoutComments()
         {
             // Arrange
-            IEnumerable<Post> posts = [new Fixture().Build<Post>().Create()];
-            IEnumerable<CommentDto> comments = [];
+            IEnumerable<Post> posts = new Fixture().Build<Post>().CreateMany(10).ToArray();
             var postDto = mapper.Map<PostDto>(posts.First());
-            var commentsDto = mapper.Map<CommentDto[]>(comments);
+            var commentsDto = Array.Empty<CommentDto>();
             var postCommentDto = mapper.Map<PostCommentDto>((postDto, commentsDto));
 
             var postsDbSetMock = posts.BuildMock().BuildMockDbSet();
@@ -102,7 +101,7 @@ namespace PostMicroService.Tests.Repositories.PostCommands
             appDbContextMock.Setup(x => x.Posts).Returns(postsDbSetMock.Object);
 
             var mockHttpMessageHandler = new MockHttpMessageHandler();
-            mockHttpMessageHandler.When($"http://localhost:5002/api/v1/comment/{postDto.Id}/post").Respond("application/json", JsonConvert.SerializeObject(comments));
+            mockHttpMessageHandler.When($"http://localhost:5002/api/v1/comment/{postDto.Id}/post").Respond("application/json", JsonConvert.SerializeObject(commentsDto));
 
             httpClientFactoryMock.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(new HttpClient(mockHttpMessageHandler));
             configurationMock.SetupGet(x => x["Services:CommentService"]).Returns("http://localhost:5002");
@@ -113,17 +112,16 @@ namespace PostMicroService.Tests.Repositories.PostCommands
             var act = await postRepository.GetByIdComment(postDto.Id);
 
             // Assert
-            act.Should().BeOfType<PostCommentDto>().And.NotBeNull().And.BeEquivalentTo(postCommentDto);
+            act.Should().BeAssignableTo<PostCommentDto>().And.NotBeNull().And.BeEquivalentTo(postCommentDto);
         }
 
         [Test]
-        public async Task GetByIdComment_ReturnsNotNullObject_WithComments()
+        public async Task GetByIdComment_Returns_NotNullObject_WithComments()
         {
             // Arrange
-            IEnumerable<Post> posts = [new Fixture().Build<Post>().Create()];
-            IEnumerable<CommentDto> comments = [new Fixture().Build<CommentDto>().Create()];
+            IEnumerable<Post> posts = new Fixture().Build<Post>().CreateMany(10).ToArray();
             var postDto = mapper.Map<PostDto>(posts.First());
-            var commentsDto = mapper.Map<CommentDto[]>(comments);
+            var commentsDto = new Fixture().Build<CommentDto>().CreateMany(10).ToArray();
             var postCommentDto = mapper.Map<PostCommentDto>((postDto, commentsDto));
 
             var postsDbSetMock = posts.BuildMock().BuildMockDbSet();
@@ -132,7 +130,7 @@ namespace PostMicroService.Tests.Repositories.PostCommands
             appDbContextMock.Setup(x => x.Posts).Returns(postsDbSetMock.Object);
 
             var mockHttpMessageHandler = new MockHttpMessageHandler();
-            mockHttpMessageHandler.When($"http://localhost:5002/api/v1/comment/{postDto.Id}/post").Respond("application/json", JsonConvert.SerializeObject(comments));
+            mockHttpMessageHandler.When($"http://localhost:5002/api/v1/comment/{postDto.Id}/post").Respond("application/json", JsonConvert.SerializeObject(commentsDto));
 
             httpClientFactoryMock.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(new HttpClient(mockHttpMessageHandler));
             configurationMock.SetupGet(x => x["Services:CommentService"]).Returns("http://localhost:5002");
@@ -143,7 +141,7 @@ namespace PostMicroService.Tests.Repositories.PostCommands
             var act = await postRepository.GetByIdComment(postDto.Id);
 
             // Assert
-            act.Should().BeOfType<PostCommentDto>().And.NotBeNull().And.BeEquivalentTo(postCommentDto);
+            act.Should().BeAssignableTo<PostCommentDto>().And.NotBeNull().And.BeEquivalentTo(postCommentDto);
         }
     }
 }

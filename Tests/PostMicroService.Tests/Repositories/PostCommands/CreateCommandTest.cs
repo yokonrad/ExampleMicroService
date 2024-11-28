@@ -74,7 +74,7 @@ namespace PostMicroService.Tests.Repositories.PostCommands
             var act = await postRepository.Create(createPostDto);
 
             // Assert
-            act.Should().BeOfType<PostDto>().And.NotBeNull().And.BeEquivalentTo(createPostDto);
+            act.Should().BeAssignableTo<PostDto>().And.NotBeNull().And.BeEquivalentTo(createPostDto);
         }
     }
 }
