@@ -48,7 +48,7 @@ helper.ps1 DockerUp
 
 ### Migrations
 
-Initial migrations are created and ready to be used. If you need to modify them, please check the [Script commands](doc:script-commands) section to find how to use helper script.
+Initial migrations are created and ready to be used. If you need to modify them, please check the [Script commands](#script-commands) section to find how to use helper script.
 
 ### Database
 
