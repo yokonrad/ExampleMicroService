@@ -70,7 +70,7 @@ namespace PostMicroService.Tests.Requests.PostCommands
             var act = await postRequest.Create(createPostRequest);
 
             // Assert
-            act.Should().BeOfType<PostCreatedRespond>().And.NotBeNull().And.BeEquivalentTo(postCreatedRespond);
+            act.Should().BeAssignableTo<PostCreatedRespond>().And.NotBeNull().And.BeEquivalentTo(postCreatedRespond);
         }
     }
 }

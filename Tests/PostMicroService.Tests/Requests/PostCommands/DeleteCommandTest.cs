@@ -70,7 +70,7 @@ namespace PostMicroService.Tests.Requests.PostCommands
             var act = await postRequest.Delete(deletePostRequest);
 
             // Assert
-            act.Should().BeOfType<PostDeletedRespond>().And.NotBeNull().And.BeEquivalentTo(postDeletedRespond);
+            act.Should().BeAssignableTo<PostDeletedRespond>().And.NotBeNull().And.BeEquivalentTo(postDeletedRespond);
         }
     }
 }
